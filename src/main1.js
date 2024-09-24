@@ -1,5 +1,7 @@
 import cart from "../cart.js";
-import products from "./products.js";
+import api from "./config/api.js";
+
+/*
 let app = document.getElementById("app");
 let temporaryContent = document.getElementById("temporaryContent");
 
@@ -18,10 +20,13 @@ const loadDestination = () => {
 };
 loadDestination();
 
-const initApp = () => {
+const initApp = async () => {
   //load list product
   let listProduct = document.querySelector(".listProduct");
   listProduct.innerHTML = null;
+
+  await getProducts();
+
   products.forEach((product) => {
     let newProduct = document.createElement("div");
     newProduct.classList.add("item");
@@ -37,3 +42,4 @@ const initApp = () => {
     listProduct.appendChild(newProduct);
   });
 };
+*/

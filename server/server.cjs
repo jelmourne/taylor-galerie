@@ -17,39 +17,39 @@ app.use(cors());
 app.use(express.json());
 
 app.post("/checkout-process", async (req, res) => {
-  let products = await req.body.cart.map(async (elem) => {
-    let { error, data } = await client
-      .from("products")
-      .select("*")
-      .eq("id", elem.productId);
-
-    if (error) {
-      console.log(error);
-    }
-
-    return new Product(
-      data[0].name,
-      data[0].price,
-      data[0].image,
-      data[0].description,
-      elem.qty
+  let { error, data } = await client
+    .from("products")
+    .select("*")
+    .in(
+      "id",
+      req.body.cart.map((v) => v.productId)
     );
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  let products = data.map((e) => {
+    let temp = req.body.cart.find((v) => {
+      return v.productId == e.id;
+    });
+
+    return new Product(e.name, e.price, e.image, e.description, temp.quantity);
   });
-  console.log(products);
-  /*
+
   const session = await stripe.checkout.sessions.create({
     line_items: products,
     mode: "payment",
-    success_url: `${process.env.DOMAIN}/success.html`,
-    cancel_url: `${process.env.DOMAIN}/cancel.html`,
+    success_url: `${"https://localhost:5173/src/static"}/destination?message="success"`,
+    cancel_url: `${"https://localhost:5173/src/static"}/destination?message="error"`,
   });
   res.send({ session });
-  */
 });
 
 // add supabase for database
 app.get("/products", async (req, res) => {
-  const { data, err } = await client.from("products").select("*");
+  const { data, err } = await client.from("products").select("*").order("id");
 
   if (err) {
     res.status(400);

@@ -136,3 +136,37 @@ body.activeTabCart .container {
   margin-top: 10px;
   border-radius: 20px;
 }
+
+.listCart .item img {
+  width: 100%;
+}
+
+.listCart .item {
+  display: grid;
+  grid-template-columns: 70px 150px 50px 1fr;
+  gap: 10px;
+  align-items: center;
+  text-align: center;
+}
+
+.listCart .item .quantity {
+  display: flex;
+}
+
+.listCart .item .quantity span {
+  width: 25px;
+  height: 25px;
+  background-color: #eee;
+  color: #000;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.listCart .item .quantity span:nth-child(2) {
+  background-color: transparent;
+  color: #fff;
+}
+
+.listCart .item:nth-child(even) {
+  background-color: #eee1;
+}
