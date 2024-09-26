@@ -1,29 +1,4 @@
-import api from "./config/api";
-
-async function getProducts() {
-  const data = await api
-    .get("/products")
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  return data;
-}
-
-async function postCheckout() {
-  const cartItems = JSON.parse(sessionStorage.getItem("cart"));
-
-  await api
-    .post("/checkout-process", { cart: cartItems })
-    .then((res) => {
-      location.replace(res.data.session.url);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
+import { getProducts, postCheckout } from "./helpers";
 
 const data = await getProducts();
 
@@ -35,10 +10,12 @@ const loadContent = async () => {
   data.map((e, i) => {
     productContent.innerHTML += `
       <div class="item">
-        <img src="${e.image}"/>
+        <a href="detail.html?id=${e.id}">
+          <img src="${e.image}"/>
+        </a>
         <h2>${e.name}</h2>
         <div class="price">$${e.price}</div>
-        <button class="addCart" value=${e.id}>
+        <button class="addCart" data-id=${e.id}>
           
              Add To Cart
            </button>
@@ -59,6 +36,8 @@ if (params.size > 0) {
   }
 }
 
+var cart = [];
+
 // initialize page components
 document.getElementById("checkoutBtn").addEventListener("click", postCheckout);
 let iconCart = document.querySelector(".icon-cart");
@@ -67,7 +46,6 @@ let body = document.querySelector("body");
 let productContent = document.getElementById("contentTab");
 
 await loadContent();
-let cart = JSON.parse(sessionStorage.getItem("cart"));
 
 iconCart.addEventListener("click", () => {
   body.classList.toggle("activeTabCart");
@@ -76,7 +54,7 @@ closeBtn.addEventListener("click", () => {
   body.classList.toggle("activeTabCart");
 });
 
-const setProductInCart = (idProduct) => {
+const setProductInCart = (idProduct, quantity) => {
   // edge case no product id
   if (!idProduct) {
     return;
@@ -85,11 +63,17 @@ const setProductInCart = (idProduct) => {
   const index = cart.findIndex((value) => {
     return value.productId == idProduct;
   });
-  // check if index/id does no exist
-  if (index < 0) {
+
+  const isPositive = quantity > 0 ? true : false;
+
+  if (!isPositive && cart[index].quantity == 1) {
+    cart.splice(index, 1);
+  } else if (index < 0) {
     cart.push({ productId: idProduct, quantity: 1 });
   } else {
-    cart[index].quantity += 1;
+    cart[index].quantity = isPositive
+      ? (cart[index].quantity += 1)
+      : (cart[index].quantity -= 1);
   }
 
   sessionStorage.setItem("cart", JSON.stringify(cart));
@@ -103,7 +87,7 @@ const refreshCartHTML = () => {
   let totalQuantity = 0;
   listHTML.innerHTML = null;
 
-  JSON.parse(sessionStorage.getItem("cart")).forEach((item) => {
+  cart.forEach((item) => {
     totalQuantity += item.quantity;
 
     const info = data.find((v) => {
@@ -119,9 +103,9 @@ const refreshCartHTML = () => {
       <div class="name">${info.name}</div>
       <div class="totalPrice">${info.price}</div>
       <div class="quantity">
-        <span class="minus"> - </span>
+        <span class="minus" data-id=${info.id}> - </span>
         <span> ${item.quantity} </span>
-        <span class="plus"> + </span>
+        <span class="plus" data-id=${info.id}> + </span>
       </div>
     `;
 
@@ -133,7 +117,23 @@ const refreshCartHTML = () => {
 // event click
 document.addEventListener("click", (event) => {
   let buttonClick = event.target;
-  let idProduct = buttonClick.value;
+  let idProduct = buttonClick.dataset.id;
 
-  setProductInCart(idProduct);
+  if (
+    buttonClick.classList.contains("addCart") ||
+    buttonClick.classList.contains("plus")
+  ) {
+    setProductInCart(idProduct, 1);
+  } else {
+    setProductInCart(idProduct, -1);
+  }
 });
+
+const initApp = () => {
+  if (sessionStorage.getItem("cart")) {
+    cart = JSON.parse(sessionStorage.getItem("cart"));
+  }
+  refreshCartHTML();
+};
+
+initApp();

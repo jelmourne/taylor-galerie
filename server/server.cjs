@@ -49,9 +49,25 @@ app.post("/checkout-process", async (req, res) => {
 
 // add supabase for database
 app.get("/products", async (req, res) => {
-  const { data, err } = await client.from("products").select("*").order("id");
+  const { data, error } = await client.from("products").select("*").order("id");
 
-  if (err) {
+  if (error) {
+    res.status(400);
+  }
+
+  res.send(data);
+});
+
+app.get("/product?:id", async (req, res) => {
+  const id = req.query.id;
+
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
     res.status(400);
   }
 

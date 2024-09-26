@@ -1,0 +1,7 @@
+3. add categories for products
+2. image cycling for products
+4. fix navbar (about, home, etc..)
+1. add chat bot
+6. increase function reusaility
+5. cleanup code
+7. add script to add new products
