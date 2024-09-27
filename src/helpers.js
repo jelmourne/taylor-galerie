@@ -1,8 +1,12 @@
 import api from "./config/api";
 
-export async function getProducts() {
+export async function getProducts(category) {
+  const params = { category: !category ? {} : category };
+
   const data = await api
-    .get("/products")
+    .get("/products", {
+      params: params,
+    })
     .then((res) => {
       return res.data;
     })
@@ -15,9 +19,7 @@ export async function getProducts() {
 export async function getProduct(id) {
   const data = await api
     .get("/product", {
-      params: {
-        id: id,
-      },
+      params: { id: id },
     })
     .then((res) => {
       return res.data;

@@ -35,7 +35,13 @@ app.post("/checkout-process", async (req, res) => {
       return v.productId == e.id;
     });
 
-    return new Product(e.name, e.price, e.image, e.description, temp.quantity);
+    return new Product(
+      e.name,
+      e.price,
+      e.image[0],
+      e.description,
+      temp.quantity
+    );
   });
 
   const session = await stripe.checkout.sessions.create({
@@ -48,11 +54,30 @@ app.post("/checkout-process", async (req, res) => {
 });
 
 // add supabase for database
-app.get("/products", async (req, res) => {
+async function getCategory(category) {
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("category", category)
+    .order("id");
+  if (error) {
+    return error;
+  }
+
+  return data;
+}
+app.get("/products?:category", async (req, res) => {
+  const category = req.query.category;
+
+  if (category) {
+    const data = await getCategory(category);
+    res.send(data);
+    return;
+  }
   const { data, error } = await client.from("products").select("*").order("id");
 
   if (error) {
-    res.status(400);
+    res.send(error);
   }
 
   res.send(data);
@@ -61,6 +86,10 @@ app.get("/products", async (req, res) => {
 app.get("/product?:id", async (req, res) => {
   const id = req.query.id;
 
+  if (!id) {
+    return;
+  }
+
   const { data, error } = await client
     .from("products")
     .select("*")
@@ -68,7 +97,7 @@ app.get("/product?:id", async (req, res) => {
     .single();
 
   if (error) {
-    res.status(400);
+    res.send(error);
   }
 
   res.send(data);

@@ -2,7 +2,7 @@ import { getProducts, postCheckout } from "./helpers";
 
 const data = await getProducts();
 
-const loadContent = async () => {
+const loadContent = () => {
   if (!data) {
     productContent.innerHTML = "<p>No Products Found try Refreshing</p>";
   }
@@ -45,7 +45,7 @@ let closeBtn = document.querySelector(".cartTab .close");
 let body = document.querySelector("body");
 let productContent = document.getElementById("contentTab");
 
-await loadContent();
+loadContent();
 
 iconCart.addEventListener("click", () => {
   body.classList.toggle("activeTabCart");
