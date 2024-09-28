@@ -43,8 +43,10 @@ header {
   right: -20px;
   width: 30px;
   height: 30px;
-  color: #fff;
+  font-size: small !important;
+  color: #fff !important;
   border-radius: 50%;
+  font-weight: 500 !important;
   display: flex;
   justify-content: center;
   align-items: center;

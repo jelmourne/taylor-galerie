@@ -145,7 +145,7 @@ nav__logo .logo {
 .header__content > div {
   max-width: 500px;
   padding: 4rem 1rem;
-  background-color: rgba(255,255,255,0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(10px);
 }
 
@@ -161,33 +161,33 @@ nav__logo .logo {
   font-size: 1.2rem;
   color: var(--text-light);
 }
- 
 
-@media (width > 768) {}
- nav{
+@media (width > 768) {
+}
+nav {
   position: static;
   padding: 2rem 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
- }
+}
 
- .nav__header {
+.nav__header {
   flex: 1;
   padding: 0;
   background-color: transparent;
- }
+}
 
- .nav__menu__btn {
+.nav__menu__btn {
   display: none;
- }
+}
 
- .nav__logo .logo{
+.nav__logo .logo {
   color: var(--primary-color);
- }
+}
 
- .nav__links{
+.nav__links {
   position: static;
   padding: 0;
   width: fit-content;
@@ -195,7 +195,7 @@ nav__logo .logo {
   gap: 3rem;
   background-color: transparent;
   transform: none;
- }
+}
 
 .nav__links a {
   color: var(--text-dark);
@@ -213,7 +213,7 @@ nav__logo .logo {
   gap: 1rem;
 }
 
-.nav__search input{
+.nav__search input {
   padding-block: 5px;
   outline: none;
   border: none;
@@ -224,12 +224,19 @@ nav__logo .logo {
   transition: 0.3s;
 }
 
-.nav__search.open input{
+.nav__search.open input {
   width: 100%;
   max-width: 15rem;
 }
 
 .nav__search span {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
+.nav__search div i {
   font-size: 1.5rem;
   font-weight: 500;
   color: var(--text-dark);
@@ -303,10 +310,10 @@ nav__logo .logo {
   text-align: center;
 }
 
-.footer__container{
+.footer__container {
   grid-template-columns: repeat(2, 1fr);
 }
 
-.footer__container{
+.footer__container {
   grid-template-columns: repeat(4, 1fr);
 }

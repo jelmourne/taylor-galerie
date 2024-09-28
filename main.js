@@ -1,3 +1,7 @@
+import { navbar } from "./src/template/navbar";
+
+document.body.prepend(navbar());
+
 const menuBtn = document.getElementById("menu-btn");
 const navLinks = document.getElementById("nav-links");
 const menuBtnIcon = menuBtn.querySelector("i");
@@ -14,17 +18,17 @@ navLinks.addEventListener("click", (e) => {
   menuBtnIcon.setAttribute("class", "ri-menu-line");
 });
 
-const navSearch = document.getElementById("nav-search")
+const navSearch = document.getElementById("nav-search");
 
 navSearch.addEventListener("click", (e) => {
-  navSearch,classList.toggle("open");
+  navSearch, classList.toggle("open");
 });
 
 const scrollRevealOption = {
   distance: "50px",
   origin: "bottom",
   duration: "1000",
-}
+};
 
 ScrollReveal().reveal(".header__image img", {
   ...scrollRevealOption,

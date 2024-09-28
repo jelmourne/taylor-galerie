@@ -1,4 +1,7 @@
 import { getProduct, getProducts } from "./helpers";
+import { navbar } from "./template/navbar";
+
+document.body.prepend(navbar());
 
 const params = new URLSearchParams(location.search);
 

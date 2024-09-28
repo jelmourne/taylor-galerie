@@ -1,4 +1,3 @@
-4. fix navbar (about, home, etc..)
 fix styling
 1. add chat bot
 6. increase function reusaility
