@@ -1,7 +1,9 @@
 import { getProducts, postCheckout } from "./helpers";
-import { navbar } from "./template/navbar";
+import { navbar, openContact } from "./template/navbar";
 
 document.body.prepend(navbar());
+
+openContact();
 
 const data = await getProducts();
 

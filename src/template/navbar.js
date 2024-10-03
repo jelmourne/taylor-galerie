@@ -15,7 +15,7 @@ export function navbar() {
   <li><a href="/">Home</a></li>
   <li><a href="#about">About</a></li>
   <li><a href="src/static/products.html">Product</a></li>
-  <li><a href="#contact">Contact</a></li>
+  <li><a href="#" id="contact">Contact</a></li>
 </ul>
 <div class="nav__search" id="nav-search">
   <input type="text" placeholder="Search" />
@@ -26,4 +26,9 @@ export function navbar() {
     </div>
 </div>`;
   return nav;
+}
+
+export function openContact() {
+  const contact = document.getElementById("contact");
+  contact.addEventListener("click", () => {});
 }
