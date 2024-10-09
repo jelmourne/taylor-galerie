@@ -1,7 +1,6 @@
 import { getProduct, getProducts } from "./helpers";
-import { navbar } from "./template/navbar";
-
-document.body.prepend(navbar());
+import { initNav, navbar } from "./template/navbar";
+import { cart, initCart } from "./template/cart";
 
 const params = new URLSearchParams(location.search);
 
@@ -10,7 +9,6 @@ if (!params.entries < 0) {
 }
 
 const data = await getProduct(params.get("id"));
-
 const similarProd = await getProducts(data.category);
 
 const prodImg = document.querySelector(".image img");
@@ -23,16 +21,16 @@ const loadProd = () => {
   similarProd.map((e, i) => {
     listProduct.innerHTML += `
     <div class="item">
-        <a href="detail.html?id=${e.id}">
-          <img src="${e.image}"/>
-        </a>
-        <h2>${e.name}</h2>
-        <div class="price">$${e.price}</div>
-        <button class="addCart" data-id=${e.id}>
-          
-             Add To Cart
-           </button>
-      </div>`;
+    <a href="detail.html?id=${e.id}">
+    <img src="${e.image}"/>
+    </a>
+    <h2>${e.name}</h2>
+    <div class="price">$${e.price}</div>
+    <button class="addCart" data-id=${e.id}>
+    
+    Add To Cart
+    </button>
+    </div>`;
   });
 };
 
@@ -57,3 +55,9 @@ const initApp = () => {
 
 initApp();
 loadProd();
+
+document.body.prepend(cart());
+document.body.prepend(navbar());
+
+initNav();
+const cartObj = new initCart(data);

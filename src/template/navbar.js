@@ -28,6 +28,19 @@ export function navbar() {
   return nav;
 }
 
+export function initNav() {
+  let body = document.querySelector("body");
+  let iconCart = document.querySelector(".icon-cart");
+  let closeBtn = document.querySelector(".cartTab .close");
+
+  iconCart.addEventListener("click", () => {
+    body.classList.toggle("activeTabCart");
+  });
+  closeBtn.addEventListener("click", () => {
+    body.classList.toggle("activeTabCart");
+  });
+}
+
 export function openContact() {
   const contact = document.getElementById("contact");
   contact.addEventListener("click", () => {});
