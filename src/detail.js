@@ -15,6 +15,7 @@ const prodImg = document.querySelector(".image img");
 const prodName = document.querySelector(".name");
 const prodPrice = document.querySelector(".price");
 const prodDesc = document.querySelector(".description");
+const prodButton = document.querySelector(".addCart");
 const listProduct = document.querySelector(".similarProduct");
 
 const loadProd = () => {
@@ -26,13 +27,44 @@ const loadProd = () => {
     </a>
     <h2>${e.name}</h2>
     <div class="price">$${e.price}</div>
-    <button class="addCart" data-id=${e.id}>
+    <button class="addCart" data-id='${e.id},${e.name},${e.price},${e.image}'>
     
     Add To Cart
     </button>
     </div>`;
   });
 };
+
+document.addEventListener("click", (event) => {
+  let buttonClick = event.target;
+  let productData = buttonClick.dataset.id.split(",");
+
+  const idProduct = productData[0];
+  const nameProduct = productData[1];
+  const priceProduct = productData[2];
+  const imageProduct = productData[3];
+
+  if (
+    buttonClick.classList.contains("addCart") ||
+    buttonClick.classList.contains("plus")
+  ) {
+    cartObj.setProductInCart(
+      idProduct,
+      nameProduct,
+      priceProduct,
+      imageProduct,
+      1
+    );
+  } else {
+    cartObj.setProductInCart(
+      idProduct,
+      nameProduct,
+      priceProduct,
+      imageProduct,
+      -1
+    );
+  }
+});
 
 prodImg.addEventListener("click", () => {
   const current = prodImg.src;
@@ -51,6 +83,7 @@ const initApp = () => {
   prodName.innerHTML = data.name;
   prodPrice.innerHTML = data.price;
   prodDesc.innerHTML = data.description;
+  prodButton.dataset.id = `${data.id}, ${data.name}, ${data.price}, ${data.image}`;
 };
 
 initApp();
@@ -60,4 +93,4 @@ document.body.prepend(cart());
 document.body.prepend(navbar());
 
 initNav();
-const cartObj = new initCart(data);
+const cartObj = new initCart();

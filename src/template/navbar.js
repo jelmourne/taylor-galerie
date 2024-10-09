@@ -32,12 +32,18 @@ export function initNav() {
   let body = document.querySelector("body");
   let iconCart = document.querySelector(".icon-cart");
   let closeBtn = document.querySelector(".cartTab .close");
+  const navSearch = document.getElementById("nav-search");
+  const navSearchBtn = document.querySelector(".ri-search-2-line");
 
   iconCart.addEventListener("click", () => {
     body.classList.toggle("activeTabCart");
   });
   closeBtn.addEventListener("click", () => {
     body.classList.toggle("activeTabCart");
+  });
+
+  navSearchBtn.addEventListener("click", () => {
+    navSearch.classList.toggle("open");
   });
 }
 

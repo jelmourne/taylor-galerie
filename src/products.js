@@ -19,7 +19,7 @@ const loadContent = () => {
     </a>
     <h2>${e.name}</h2>
     <div class="price">$${e.price}</div>
-    <button class="addCart" data-id=${e.id}>
+    <button class="addCart" data-id='${e.id},${e.name},${e.price},${e.image}'>
     
     Add To Cart
     </button>
@@ -47,20 +47,38 @@ loadContent();
 // event click
 document.addEventListener("click", (event) => {
   let buttonClick = event.target;
-  let idProduct = buttonClick.dataset.id;
+  let productData = buttonClick.dataset.id.split(",");
+
+  const idProduct = productData[0];
+  const nameProduct = productData[1];
+  const priceProduct = productData[2];
+  const imageProduct = productData[3];
 
   if (
     buttonClick.classList.contains("addCart") ||
     buttonClick.classList.contains("plus")
   ) {
-    cartObj.setProductInCart(idProduct, 1);
+    cartObj.setProductInCart(
+      idProduct,
+      nameProduct,
+      priceProduct,
+      imageProduct,
+      1
+    );
   } else {
-    cartObj.setProductInCart(idProduct, -1);
+    cartObj.setProductInCart(
+      idProduct,
+      nameProduct,
+      priceProduct,
+      imageProduct,
+      -1
+    );
   }
 });
 
 document.body.prepend(cart());
 document.body.prepend(navbar());
 
-const cartObj = new initCart(data);
+const cartObj = new initCart();
+
 initNav();

@@ -1,28 +1,8 @@
-import { navbar } from "./src/template/navbar";
+import { navbar, initNav } from "./src/template/navbar";
+import { cart, initCart } from "./src/template/cart";
 
+document.body.prepend(cart());
 document.body.prepend(navbar());
-
-const menuBtn = document.getElementById("menu-btn");
-const navLinks = document.getElementById("nav-links");
-const menuBtnIcon = menuBtn.querySelector("i");
-
-menuBtn.addEventListener("click", (e) => {
-  navLinks.classList.toggle("open");
-
-  const isOpen = navLinks.classList.contains("open");
-  menuBtnIcon.setAttribute("class", isOpen ? "ri-close-line" : "ri-menu-line");
-});
-
-navLinks.addEventListener("click", (e) => {
-  navLinks.classList.remove("open");
-  menuBtnIcon.setAttribute("class", "ri-menu-line");
-});
-
-const navSearch = document.getElementById("nav-search");
-
-navSearch.addEventListener("click", (e) => {
-  navSearch, classList.toggle("open");
-});
 
 const scrollRevealOption = {
   distance: "50px",
@@ -46,3 +26,6 @@ ScrollReveal().reveal(".header__content p", {
   ...scrollRevealOption,
   delay: 1500,
 });
+
+const cartObj = new initCart();
+initNav();

@@ -1,5 +1,8 @@
 fix styling
 1. add chat bot
+2. translations
+3. contact form
+4. add search bar
 6. increase function reusaility
 5. cleanup code
 7. add script to add new products
