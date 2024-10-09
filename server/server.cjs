@@ -103,7 +103,19 @@ app.get("/product?:id", async (req, res) => {
   res.send(data);
 });
 
-// add confirmation to clients
+app.get("/search?:name", async (req, res) => {
+  const name = req.query.name;
+
+  if (!name) {
+    return;
+  }
+
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .like("name", `%${name}%`)
+    .limit(4);
+});
 
 app.listen(3000, () => {
   console.log(`Example app listening on port ${3000}`);
