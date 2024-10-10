@@ -61,7 +61,7 @@ async function getCategory(category) {
     .eq("category", category)
     .order("id");
   if (error) {
-    return error;
+    throw new Error(error);
   }
 
   return data;
@@ -77,7 +77,7 @@ app.get("/products?:category", async (req, res) => {
   const { data, error } = await client.from("products").select("*").order("id");
 
   if (error) {
-    res.send(error);
+    throw new Error(error);
   }
 
   res.send(data);
@@ -97,7 +97,7 @@ app.get("/product?:id", async (req, res) => {
     .single();
 
   if (error) {
-    res.send(error);
+    throw new Error(error);
   }
 
   res.send(data);
@@ -113,8 +113,13 @@ app.get("/search?:name", async (req, res) => {
   const { data, error } = await client
     .from("products")
     .select("*")
-    .like("name", `%${name}%`)
+    .ilike("name", `%${name}%`)
     .limit(4);
+
+  if (error) {
+    throw new Error(error);
+  }
+  res.send(data);
 });
 
 app.listen(3000, () => {

@@ -81,7 +81,7 @@ const initApp = () => {
   }
   prodImg.src = data.image;
   prodName.innerHTML = data.name;
-  prodPrice.innerHTML = data.price;
+  prodPrice.innerHTML = "$" + data.price;
   prodDesc.innerHTML = data.description;
   prodButton.dataset.id = `${data.id}, ${data.name}, ${data.price}, ${data.image}`;
 };

@@ -36,6 +36,13 @@ header {
   position: relative;
 }
 
+.icon-cart i {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  cursor: pointer;
+}
+
 .icon-cart span {
   background-color: #254d4d;
   position: absolute;
@@ -263,17 +270,16 @@ body.activeTabCart .container {
 }
 
 .contactForm {
-  border-width: 1px;
+  background-color: #fff;
   padding: 20px;
-  border-color: #000;
-  border-style: solid;
+  border: 1px solid #ddd;
   border-radius: 20px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 99;
+  z-index: 9999;
 }
 
 .contactForm form {
@@ -285,6 +291,7 @@ body.activeTabCart .container {
 .contactForm p {
   font-family: poppins;
   text-align: center;
+  margin-bottom: 20px;
   font-size: x-large;
 }
 .contactForm img {
@@ -293,6 +300,14 @@ body.activeTabCart .container {
 .contactForm div {
   display: flex;
   align-items: center;
+}
+
+.contactForm i {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  right: 0;
+  margin: 15px;
 }
 
 .contactForm input[type="text"],

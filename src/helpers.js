@@ -16,6 +16,20 @@ export async function getProducts(category) {
   return data;
 }
 
+export async function getSearch(name) {
+  const data = await api
+    .get("/search", {
+      params: { name: name },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  return data;
+}
+
 export async function getProduct(id) {
   const data = await api
     .get("/product", {
