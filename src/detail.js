@@ -1,6 +1,7 @@
 import { getProduct, getProducts } from "./helpers";
 import { initNav, navbar } from "./template/navbar";
 import { cart, initCart } from "./template/cart";
+import { message } from "./template/message";
 
 const params = new URLSearchParams(location.search);
 
@@ -91,6 +92,7 @@ loadProd();
 
 document.body.prepend(cart());
 document.body.prepend(navbar());
+document.body.prepend(message());
 
 initNav();
 const cartObj = new initCart();

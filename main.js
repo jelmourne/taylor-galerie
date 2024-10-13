@@ -1,8 +1,10 @@
 import { navbar, initNav } from "./src/template/navbar";
 import { cart, initCart } from "./src/template/cart";
+import { message } from "./src/template/message";
 
 document.body.prepend(cart());
 document.body.prepend(navbar());
+document.body.prepend(message());
 
 const scrollRevealOption = {
   distance: "50px",

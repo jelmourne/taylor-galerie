@@ -56,3 +56,14 @@ export async function postCheckout() {
       console.log(err);
     });
 }
+
+export async function postEmail(message) {
+  await api
+    .post("/email", { message: message })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+}

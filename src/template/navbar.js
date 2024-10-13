@@ -1,4 +1,4 @@
-import { getSearch } from "../helpers";
+import { getSearch, postEmail } from "../helpers";
 
 // insert template for navbar
 export function navbar() {
@@ -31,16 +31,17 @@ export function navbar() {
     <span>0</span>
   </div>
 
-  <div id="contactFrom" class="contactForm hidden">
+  <div class="blur hidden"></div>
+  <div id="contactFromDiv" class="contactForm hidden">
   <i class="ri-close-large-line"></i>
   <p>Contact Us</p>
   <div>
     <img src="https://ljsycmobqargkvvhrtgz.supabase.co/storage/v1/object/public/product-images/product.png" />
-    <form>
-      <input type="text" placeholder="Fullname" />
-      <input type="email" placeholder="Email" />
-      <input type="text" placeholder="Subject" />
-      <textarea placeholder="Enter your message"></textarea>
+    <form id="contactForm" action="post">
+      <input id="name" type="text" placeholder="Fullname" />
+      <input id="email" type="email" placeholder="Email" />
+      <input id="subject" type="text" placeholder="Subject" />
+      <textarea id="message" placeholder="Enter your message"></textarea>
       <input type="submit" value="Send" />
     </form>
   </div>
@@ -56,7 +57,8 @@ export function initNav() {
   const navSearchBtn = document.querySelector(".ri-search-2-line");
   const searchResults = document.querySelector(".search__items");
 
-  const contactFrom = document.querySelector(".contactForm");
+  const contactFromDiv = document.querySelector(".contactForm");
+  const contactFrom = document.querySelector("#contactForm");
 
   iconCart.addEventListener("click", () => {
     body.classList.toggle("activeTabCart");
@@ -70,13 +72,37 @@ export function initNav() {
   });
 
   document.querySelector("#contact").addEventListener("click", () => {
-    contactFrom.classList.remove("hidden");
+    contactFromDiv.classList.remove("hidden");
+    document.querySelector(".blur").classList.remove("hidden");
+  });
+
+  contactFrom.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let subject = document.getElementById("subject").value;
+    let message = document.getElementById("message").value;
+
+    if (!name || !email || !subject || !message) {
+      throw new Error("Invalid data");
+    }
+
+    const msg = {
+      name: name,
+      email: email,
+      subject: subject,
+      message: message,
+    };
+
+    postEmail(msg);
   });
 
   document
     .querySelector(".ri-close-large-line")
     .addEventListener("click", () => {
-      contactFrom.classList.add("hidden");
+      contactFromDiv.classList.add("hidden");
+      document.querySelector(".blur").classList.add("hidden");
     });
 
   let timer;

@@ -122,6 +122,10 @@ app.get("/search?:name", async (req, res) => {
   res.send(data);
 });
 
+app.post("/email", async (req, res) => {
+  const params = req.body.message;
+});
+
 app.listen(3000, () => {
   console.log(`Example app listening on port ${3000}`);
 });
