@@ -377,6 +377,12 @@ input[type="email"]:hover {
   border-radius: 20px;
 }
 
+.messageContainer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
 .messageButton {
   background-color: #254d4d;
   position: fixed;
@@ -386,6 +392,7 @@ input[type="email"]:hover {
   margin: 20px;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 1;
 }
 .messageButton i {
   color: white;
@@ -394,6 +401,58 @@ input[type="email"]:hover {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+}
+
+.messageBox {
+  position: relative;
+  border-radius: 10%;
+  width: 300px;
+  height: 300px;
+  background-color: white;
+  border: #ddd solid 1px;
+  margin: 15px;
+}
+
+.messageBox textarea {
+  resize: none;
+  margin-inline-start: 10px;
+}
+
+.messageWindow {
+  height: 215px;
+  max-height: 215px;
+  margin: 15px 15px 5px 15px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.messageWindow .sender {
+  display: flex;
+  justify-content: end;
+}
+
+.messageWindow .sender span {
+  background-color: #53d769;
+  color: white;
+}
+
+.messageWindow .recieved {
+  display: flex;
+  justify-content: start;
+}
+
+.messageWindow .recieved span {
+  background-color: #8e8e93;
+  color: white;
+}
+
+.messageWindow span {
+  padding: 10px;
+  text-wrap: wrap;
+  margin-top: 4px;
+  max-width: 150px;
+  border-radius: 10px;
 }
 
 .blur {

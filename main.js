@@ -1,6 +1,6 @@
 import { navbar, initNav } from "./src/template/navbar";
 import { cart, initCart } from "./src/template/cart";
-import { message } from "./src/template/message";
+import { initMessage, message } from "./src/template/message";
 
 document.body.prepend(cart());
 document.body.prepend(navbar());
@@ -31,3 +31,4 @@ ScrollReveal().reveal(".header__content p", {
 
 const cartObj = new initCart();
 initNav();
+initMessage();

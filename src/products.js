@@ -1,7 +1,7 @@
 import { getProducts, postCheckout } from "./helpers";
 import { navbar, initNav } from "./template/navbar";
 import { cart, initCart } from "./template/cart";
-import { message } from "./template/message";
+import { message, initMessage } from "./template/message";
 
 let productContent = document.getElementById("contentTab");
 
@@ -84,3 +84,4 @@ document.body.prepend(message());
 const cartObj = new initCart();
 
 initNav();
+initMessage();
