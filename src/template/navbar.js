@@ -22,9 +22,7 @@ export function navbar() {
 <div class="nav__search" id="nav-search">
   <input type="text" placeholder="Search" value=""/>
   <span><i class="ri-search-2-line"></i></span>
-  <div class="search__items hidden">
-  
-  </div>
+  <div class="search__items hidden"></div>
   </div>
    <div class="icon-cart">    
     <i class="ri-shopping-cart-line"></i>

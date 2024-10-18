@@ -119,7 +119,7 @@ body.activeTabCart .container {
 /* list item product */
 .listProduct .item img {
   width: 90%;
-  filter: drop-shadow(0 50px 20px #0009);
+  z-index: -1;
 }
 .listProduct {
   display: grid;
@@ -197,10 +197,12 @@ body.activeTabCart .container {
 
 .detail .image img {
   width: 100%;
+  z-index: -1;
 }
 
 .detail .image {
   position: relative;
+  z-index: -1;
 }
 
 .detail .image::before {
@@ -266,7 +268,6 @@ body.activeTabCart .container {
 
 .similarProduct .item img {
   width: 90%;
-  filter: drop-shadow(0 50px 20px #0009);
 }
 
 .contactForm {
@@ -314,8 +315,6 @@ body.activeTabCart .container {
 .contactForm input[type="text"],
 input[type="email"],
 textarea {
-  width: 20vw;
-  max-width: 220px;
   padding: 12px;
   border-radius: 12px;
   border: 1.5px solid lightgrey;
@@ -333,7 +332,6 @@ input[type="email"]:hover {
   outline: none;
   border: none;
   padding: 5px;
-  width: 50%;
   font-size: large;
   border-radius: 10px;
   color: #fff;
@@ -416,6 +414,7 @@ input[type="email"]:hover {
 .messageBox textarea {
   resize: none;
   margin-inline-start: 10px;
+  width: 75%;
 }
 
 .messageWindow {
@@ -451,7 +450,7 @@ input[type="email"]:hover {
   padding: 10px;
   text-wrap: wrap;
   margin-top: 4px;
-  max-width: 150px;
+  max-width: 75%;
   border-radius: 10px;
 }
 
@@ -467,6 +466,15 @@ input[type="email"]:hover {
 }
 
 @media screen and (max-width: 992px) {
+  .contactForm {
+    width: 95%;
+  }
+  .contactForm img {
+    width: 40vw;
+  }
+  .icon-cart {
+    transform: translateX(-10px);
+  }
   .listProduct {
     grid-template-columns: repeat(3, 1fr);
   }

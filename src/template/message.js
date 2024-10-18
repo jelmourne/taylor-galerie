@@ -34,26 +34,39 @@ export async function initMessage() {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxqc3ljbW9icWFyZ2t2dmhydGd6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjcxNTIyNzUsImV4cCI6MjA0MjcyODI3NX0.BDIi-y7w_XuorUwQDxgr5sWmWntdYxelHzl-dZ5wcIk"
   );
 
-  supabase
-    .channel("messages")
-    .on(
-      "postgres_changes",
-      {
-        event: "INSERT",
-        schema: "public",
-        table: "messages",
-        filter: `chat_room=eq.${sessionStorage.getItem("chat_room")}`,
-      },
-      (payload) => console.log(payload)
-    )
-    .subscribe();
-
   const messageButton = document.querySelector(".ri-chat-1-line");
   const messageBox = document.querySelector(".messageBox");
   const messageBoxText = document.querySelector("#messageBox");
   const messageWindow = document.querySelector(".messageWindow");
 
-  await loadMessages(messageWindow);
+  try {
+    supabase
+      .channel("messages")
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "messages",
+          filter: `chat_room=eq.${sessionStorage.getItem("chat_room")}`,
+        },
+        (p) => {
+          messageWindow.innerHTML += `<div class=${
+            p.new.is_client ? "sender" : "recieved"
+          }><span>${p.new.message}</span></div>`;
+          messageWindow.scrollTop = messageWindow.scrollHeight;
+        }
+      )
+      .subscribe();
+  } catch (err) {
+    console.log(err);
+  }
+
+  try {
+    await loadMessages(messageWindow);
+  } catch (err) {
+    console.log(err);
+  }
 
   messageButton.addEventListener("click", () => {
     if (messageBox.classList.contains("hidden")) {
@@ -73,9 +86,8 @@ export async function initMessage() {
       }
       e.preventDefault();
       await postMessage(messageBoxText.value);
-      await loadMessages(messageWindow);
+
       messageBoxText.value = "";
-      messageWindow.scrollTop = messageWindow.scrollHeight;
 
       return false;
     }
