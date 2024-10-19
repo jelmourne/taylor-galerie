@@ -17,7 +17,6 @@ button {
 }
 
 .container {
-  width: 550px;
   max-width: 90vw;
   margin: auto;
   text-align: center;
@@ -113,12 +112,8 @@ body.activeTabCart .cartTab {
   right: 0;
 }
 
-body.activeTabCart .container {
-  transform: translateX(-250px);
-}
 /* list item product */
 .listProduct .item img {
-  width: 90%;
   z-index: -1;
 }
 .listProduct {
@@ -127,28 +122,31 @@ body.activeTabCart .container {
   gap: 20px;
 }
 
-.listProduct .item {
-  background-color: #eeeee6;
-  padding: 20px;
-  border-radius: 20px;
+.item div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.listProduct .item .price {
+.item div p {
+  font-weight: 200;
+  grid-area: 1/1/1/1;
+  text-wrap: nowrap;
+}
+.item div .price {
+  grid-area: 2/1/2/1;
   letter-spacing: 7px;
   font-size: small;
+  text-align: start;
+  font-weight: 600;
 }
 
-.listProduct .item button {
-  background-color: #353432;
-  color: #eee;
+.item div button {
+  font-weight: 600;
+  text-align: end;
   border: none;
-  padding: 5px 10px;
-  margin-top: 10px;
-  border-radius: 20px;
-}
-
-.listCart .item img {
-  width: 100%;
+  background-color: transparent;
+  grid-area: 1/2/1/2;
+  color: #353432;
 }
 
 .listCart .item {
@@ -266,10 +264,6 @@ body.activeTabCart .container {
   overflow-x: scroll;
 }
 
-.similarProduct .item img {
-  width: 90%;
-}
-
 .contactForm {
   filter: none;
   background-color: #fff;
@@ -356,23 +350,7 @@ input[type="email"]:hover {
 
 .similarProduct .item {
   min-width: 300px;
-  background-color: #eeeee6;
-  padding: 20px;
-  border-radius: 20px;
-}
-
-.similarProduct .item .price {
-  letter-spacing: 7px;
-  font-size: small;
-}
-
-.similarProduct .item button {
-  background-color: #353432;
-  color: #eee;
-  border: none;
-  padding: 5px 10px;
-  margin-top: 10px;
-  border-radius: 20px;
+  margin-right: 10px;
 }
 
 .messageContainer {

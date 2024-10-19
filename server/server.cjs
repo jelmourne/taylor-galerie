@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const Product = require("./models/product.cjs");
 
+// install ejs
+
 require("dotenv").config();
 
 const stripe = require("stripe")(process.env.STRIPE_SK);
@@ -153,7 +155,9 @@ app.get("/messages?:chat_room", async (req, res) => {
     .eq("chat_room", chat_room)
     .order("sent_at");
 
-  if (error) throw new Error(error);
+  if (error) {
+    console.log(error);
+  }
 
   res.send(data);
 });

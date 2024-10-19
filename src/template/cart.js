@@ -35,6 +35,8 @@ export class initCart {
     this.cart.forEach((item) => {
       totalQuantity += item.quantity;
 
+      /* add event listener for cart add and remove */
+
       let newItem = document.createElement("div");
       newItem.classList.add("item");
       newItem.innerHTML = `

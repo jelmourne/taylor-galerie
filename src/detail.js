@@ -26,12 +26,13 @@ const loadProd = () => {
     <a href="detail.html?id=${e.id}">
     <img src="${e.image}"/>
     </a>
-    <h2>${e.name}</h2>
+    <div>
+    <p>${e.name.toLowerCase()}</p>
     <div class="price">$${e.price}</div>
     <button class="addCart" data-id='${e.id},${e.name},${e.price},${e.image}'>
-    
     Add To Cart
     </button>
+    <div/>
     </div>`;
   });
 };

@@ -82,8 +82,10 @@ nav {
   background-color: var(--primary-color);
 }
 
-nav__logo .logo {
-  color: var(--white);
+.nav__header > div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
 .nav__menu__btn {
@@ -168,7 +170,7 @@ nav__logo .logo {
 @media (width > 768) {
 }
 nav {
-  position: static;
+  position: relative;
   padding: 2rem 1rem;
   display: flex;
   align-items: center;
@@ -185,6 +187,13 @@ nav {
 
 .nav__menu__btn {
   display: none;
+}
+
+.nav__logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .nav__logo .logo {
