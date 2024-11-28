@@ -16,11 +16,11 @@ const loadContent = () => {
     productContent.innerHTML += `
     <div class="item">
     <a href="detail.html?id=${e.id}">
-    <img src="${e.image}"/>
+    <img src="${e.image[1]}" loading="lazy"/>
     </a>
     <div>
     <p>${e.name.toLowerCase()}</p>
-    <div class="price">$${e.price}</div>
+    <div class="price">$${Math.round(e.price)}</div>
     <button class="addCart" data-id='${e.id},${e.name},${e.price},${e.image}'>
     Add To Cart
     </button>

@@ -24,7 +24,7 @@ const loadProd = () => {
     listProduct.innerHTML += `
     <div class="item">
     <a href="detail.html?id=${e.id}">
-    <img src="${e.image}"/>
+    <img src="${e.image[1]}"/>
     </a>
     <div>
     <p>${e.name.toLowerCase()}</p>
@@ -81,7 +81,7 @@ const initApp = () => {
   if (!data) {
     return;
   }
-  prodImg.src = data.image;
+  prodImg.src = data.image[0];
   prodName.innerHTML = data.name;
   prodPrice.innerHTML = "$" + data.price;
   prodDesc.innerHTML = data.description;
