@@ -68,6 +68,22 @@ async function getCategory(category) {
 
   return data;
 }
+
+app.get("/products/categories", async (req, res) => {
+  const { data, error } = await client
+    .from("products")
+    .select("category")
+    .order("category");
+
+  if (error) {
+    throw new Error(error);
+  }
+
+  let filterData = [...new Set(data.map((e) => e.category))];
+
+  res.send(filterData);
+});
+
 app.get("/products?:category", async (req, res) => {
   const category = req.query.category;
 

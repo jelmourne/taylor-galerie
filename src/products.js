@@ -21,7 +21,9 @@ const loadContent = () => {
     <div>
     <p>${e.name.toLowerCase()}</p>
     <div class="price">$${Math.round(e.price)}</div>
-    <button class="addCart" data-id='${e.id},${e.name},${e.price},${e.image}'>
+    <button class="addCart" data-id='${e.id},${e.name},${e.price},${
+      e.image[1]
+    }'>
     Add To Cart
     </button>
     <div/>

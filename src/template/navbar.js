@@ -1,4 +1,7 @@
 import { getSearch, postEmail } from "../helpers";
+import api from "../config/api";
+
+const categories = await api.get("/products/categories");
 
 // insert template for navbar
 export function navbar() {
@@ -7,8 +10,14 @@ export function navbar() {
 
   nav.innerHTML = `<div class="nav__header">
   <div>
-    <i class="ri-menu-line"></i>
+    <i class="ri-menu-line" style="cursor:pointer;"></i>
+    <div class="nav__dropdown hidden">
+    <p>Lighting</p>
+    <ul id="lighting"></ul>
+    <p>Tables</p>
+    </div>
   </div>
+ 
   <div class="nav__logo">
     <a href="/" class="logo">furni.shop</a>
   </div>
@@ -32,6 +41,8 @@ export function initNav() {
   let body = document.querySelector("body");
   let iconCart = document.querySelector(".icon-cart");
   let closeBtn = document.querySelector(".cartTab .close");
+  const navDropdownBtn = document.querySelector(".ri-menu-line");
+  const navDropdown = document.querySelector(".nav__dropdown");
   const navSearch = document.getElementById("nav-search");
   const navSearchBtn = document.querySelector(".ri-search-2-line");
   const searchResults = document.querySelector(".search__items");
@@ -45,6 +56,17 @@ export function initNav() {
 
   navSearchBtn.addEventListener("click", () => {
     navSearch.classList.toggle("open");
+  });
+
+  navDropdownBtn.addEventListener("click", () => {
+    let lighting = document.getElementById("lighting");
+    lighting.innerHTML = "";
+
+    categories.data.forEach((e) => {
+      lighting.innerHTML += `<li><a href="http://localhost:5173/src/static/products.html">${e}</a></li>`;
+    });
+    navDropdownBtn.classList.toggle("nav__dropdown__animation");
+    navDropdown.classList.toggle("hidden");
   });
 
   let timer;

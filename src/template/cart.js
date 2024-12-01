@@ -8,7 +8,7 @@ export function cart() {
       <h1>Shopping Cart</h1>
       <div class="listCart">show item here</div>
       <div class="btn">
-        <button class="close">CLOSE</button>
+        <button class="close">Close</button>
         <button class="checkOut" id="checkoutBtn">
           Check Out
         </button>

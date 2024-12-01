@@ -1,6 +1,10 @@
 
+1. drop down menu
+
 2. translations
 
-7. add script to add new products
+3. add email
 
-routing
+4. dashboard
+
+5. routing
