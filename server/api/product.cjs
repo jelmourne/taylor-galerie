@@ -32,7 +32,6 @@ router.get("/categories", async (req, res) => {
   if (error) {
     throw new Error(error);
   }
-
   let filterData = [...new Set(data.map((e) => e.category))];
 
   res.send(filterData);

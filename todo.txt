@@ -1,10 +1,7 @@
-
-1. drop down menu
-
-2. translations
-
 3. add email
 
 4. dashboard
 
 5. routing
+
+6. convert to ejs modules/replace api

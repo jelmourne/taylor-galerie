@@ -1,6 +1,16 @@
+const express = require("express");
 require("dotenv").config();
 
-app.post("/messages", async (req, res) => {
+router = express.Router();
+
+const supabase = require("@supabase/supabase-js");
+
+const client = supabase.createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SK
+);
+
+router.post("/messages", async (req, res) => {
   const { id, message, is_client } = req.body;
 
   if (!id) {
@@ -18,7 +28,7 @@ app.post("/messages", async (req, res) => {
   res.send(data);
 });
 
-app.get("/messages?:chat_room", async (req, res) => {
+router.get("/messages?:chat_room", async (req, res) => {
   const chat_room = req.query.chat_room;
 
   const { data, error } = await client
@@ -33,3 +43,5 @@ app.get("/messages?:chat_room", async (req, res) => {
 
   res.send(data);
 });
+
+module.exports = router;
