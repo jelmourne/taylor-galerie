@@ -1,8 +1,11 @@
-require("dotenv").config();
+const express = require("express");
 
-const stripe = require("stripe")(process.env.STRIPE_SK);
+const { Product } = require("../models/product.cjs");
+const { client, stripe } = require("../config/config.cjs");
 
-app.post("/checkout-process", async (req, res) => {
+router = express.Router();
+
+router.post("/", async (req, res) => {
   let { error, data } = await client
     .from("products")
     .select("*")
@@ -12,7 +15,7 @@ app.post("/checkout-process", async (req, res) => {
     );
 
   if (error) {
-    console.log(error);
+    throw new Error(error);
     return;
   }
 
@@ -33,8 +36,14 @@ app.post("/checkout-process", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: products,
     mode: "payment",
-    success_url: `${"https://localhost:5173/src/static"}/destination?message="success"`,
-    cancel_url: `${"https://localhost:5173/src/static"}/destination?message="error"`,
+    success_url: `${"https://localhost:3000"}/destination?message="success"`,
+    cancel_url: `${"https://localhost:3000"}/destination?message="error"`,
   });
   res.send({ session });
 });
+
+router.post("/add", (req,res) => {
+  
+})
+
+module.exports = router;

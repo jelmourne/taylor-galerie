@@ -1,11 +1,3 @@
-import { navbar, initNav } from "./src/template/navbar";
-import { cart, initCart } from "./src/template/cart";
-import { initMessage, message } from "./src/template/message";
-
-document.body.prepend(cart());
-document.body.prepend(navbar());
-document.body.prepend(message());
-
 const scrollRevealOption = {
   distance: "50px",
   origin: "bottom",
@@ -28,7 +20,3 @@ ScrollReveal().reveal(".header__content p", {
   ...scrollRevealOption,
   delay: 1500,
 });
-
-const cartObj = new initCart();
-initNav();
-initMessage();

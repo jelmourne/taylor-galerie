@@ -1,14 +1,7 @@
 const express = require("express");
-require("dotenv").config();
+const { client } = require("../config/config.cjs");
 
 router = express.Router();
-
-const supabase = require("@supabase/supabase-js");
-
-const client = supabase.createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SK
-);
 
 async function getCategory(category) {
   const { data, error } = await client
@@ -22,20 +15,6 @@ async function getCategory(category) {
 
   return data;
 }
-
-router.get("/categories", async (req, res) => {
-  const { data, error } = await client
-    .from("products")
-    .select("category")
-    .order("category");
-
-  if (error) {
-    throw new Error(error);
-  }
-  let filterData = [...new Set(data.map((e) => e.category))];
-
-  res.send(filterData);
-});
 
 router.get("/?:category", async (req, res) => {
   const category = req.query.category;
@@ -90,6 +69,7 @@ router.get("/search?:name", async (req, res) => {
   if (error) {
     throw new Error(error);
   }
+
   res.send(data);
 });
 

@@ -1,23 +1,6 @@
-import { postCheckout } from "../helpers";
+import { postCheckout } from "../helpers.js";
 
-export function cart() {
-  const cartTab = document.createElement("div");
-  cartTab.classList.add("cartTab");
-
-  cartTab.innerHTML = `<div class="cartTab">
-      <h1>Shopping Cart</h1>
-      <div class="listCart">show item here</div>
-      <div class="btn">
-        <button class="close">Close</button>
-        <button class="checkOut" id="checkoutBtn">
-          Check Out
-        </button>
-      </div>
-    </div>`;
-  return cartTab;
-}
-
-export class initCart {
+class Cart {
   constructor() {
     this.cart = sessionStorage.getItem("cart")
       ? JSON.parse(sessionStorage.getItem("cart"))
@@ -32,7 +15,7 @@ export class initCart {
     let totalQuantity = 0;
     listHTML.innerHTML = null;
 
-    this.cart.forEach((item) => {
+    cart.forEach((item) => {
       totalQuantity += item.quantity;
 
       /* add event listener for cart add and remove */
@@ -40,17 +23,17 @@ export class initCart {
       let newItem = document.createElement("div");
       newItem.classList.add("item");
       newItem.innerHTML = `
-        <div class="image">
-        <img src="${item.image}">
-        </div>
-        <div class="name">${item.name}</div>
-        <div class="totalPrice">${item.price}</div>
-        <div class="quantity">
-        <span class="minus" data-id='${item.productId},${item.name},${item.price},${item.image}'> - </span>
-        <span> ${item.quantity} </span>
-        <span class="plus" data-id='${item.productId},${item.name},${item.price},${item.image}'> + </span>
-        </div>
-        `;
+      <div class="image">
+      <img src="${item.image}">
+      </div>
+      <div class="name">${item.name}</div>
+      <div class="totalPrice">${item.price}</div>
+      <div class="quantity">
+      <span class="minus" data-id='${item.productId},${item.name},${item.price},${item.image}'> - </span>
+      <span> ${item.quantity} </span>
+      <span class="plus" data-id='${item.productId},${item.name},${item.price},${item.image}'> + </span>
+      </div>
+      `;
 
       listHTML.appendChild(newItem);
     });

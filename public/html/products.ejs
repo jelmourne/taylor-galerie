@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/products.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <%- include('layouts/navbar', {categories:categories}); -%>
+    <div class="container">
+      <div class="listProduct" id="contentTab">
+        <% products.map((e, i) => { %>
+        <div class="item">
+          <a href="/product/<%= e.id %>">
+            <img src="<%= e.image[1] %>" loading="lazy" />
+          </a>
+          <div>
+            <p><%= e.name.toLowerCase() %></p>
+            <div class="price"><%= e.price %></div>
+            <button
+              class="addCart"
+              data-id="<%= e.id %>,<%= e.name %>,<%= e.price %>,<%= e.image[1] %>"
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
+  </body>
+  <script>
+    function setItemCart(id, name, price, image, quantity) {
+      let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+      let existingProduct = cart.find((item) => item.id === id);
+      if (existingProduct) {
+        existingProduct.quantity += quantity;
+      } else {
+        cart.push({ id, name, price, image, quantity });
+      }
+
+      sessionStorage.setItem("cart", JSON.stringify(cart));
+
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
+      const cartCount = cartItems.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      document.querySelector(".icon-cart span").textContent = cartCount;
+    }
+
+    document.querySelectorAll(".addCart").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const [id, name, price, image] = e.target.dataset.id.split(",");
+        setItemCart(id, name, price, image, 1);
+      });
+    });
+  </script>
+</html>

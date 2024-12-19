@@ -1,7 +1,7 @@
-import { getProduct, getProducts } from "./helpers";
-import { initNav, navbar } from "./template/navbar";
-import { cart, initCart } from "./template/cart";
-import { message, initMessage } from "./template/message";
+import { getProduct, getProducts } from "./helpers.js";
+import { initNav, navbar } from "./template/navbar.js";
+import { cart, initCart } from "./template/cart.js";
+import { message, initMessage } from "./template/message.js";
 
 const params = new URLSearchParams(location.search);
 

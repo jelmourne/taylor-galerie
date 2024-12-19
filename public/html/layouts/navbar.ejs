@@ -1,0 +1,169 @@
+<nav class="activeTabCart">
+  <div class="nav__header">
+    <div>
+      <i class="ri-menu-line" style="cursor: pointer"></i>
+      <div class="nav__dropdown hidden">
+        <p>Lighting</p>
+        <ul id="lighting">
+          <% categories.map((e, i) => { %>
+          <li>
+            <a href="products?category=<%= e %>"> <%= e %> </a>
+          </li>
+
+          <% })%>
+        </ul>
+        <p>Tables</p>
+      </div>
+    </div>
+
+    <div class="nav__logo">
+      <a href="/" class="logo">Taylor Galerie</a>
+    </div>
+    <div>
+      <div class="nav__search" id="nav-search">
+        <input type="text" placeholder="Search" value="" />
+        <span><i class="ri-search-2-line"></i></span>
+        <div class="search__items hidden"></div>
+      </div>
+      <div class="icon-cart">
+        <i class="ri-shopping-cart-line"></i>
+        <span>0</span>
+      </div>
+      <div class="cartTab">
+        <h1>Shopping Cart</h1>
+        <div class="listCart">show item here</div>
+        <div class="btn">
+          <button class="close">Close</button>
+          <button class="checkOut" id="checkoutBtn">Check Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<script>
+  // functions
+  async function getSearch(name) {
+    const data = await fetch(
+      `http://localhost:3000/api/products/search?name=${name}`
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+
+    return data;
+  }
+
+  async function postCheckout() {
+    const cartItems = JSON.parse(sessionStorage.getItem("cart"));
+
+    await fetch("http://localhost:3000/api/checkout", {
+      method: "POST",
+      body: JSON.stringify({ cart: cartItems }),
+    })
+      .then((res) => {
+        console.log(res.json());
+        //location.replace(res.json());
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  }
+
+  function refreshCart(firstLoad) {
+    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+    cartList.innerHTML = null;
+    let totalQuantity = 0;
+
+    cart.forEach((item) => {
+      totalQuantity += item.quantity;
+      let newItem = document.createElement("div");
+      newItem.classList.add("item");
+      newItem.innerHTML = `
+        <div class="image">
+        <img src="${item.image}">
+        </div>
+        <div class="name">${item.name}</div>
+        <div class="totalPrice">${item.price}</div>
+        <div class="quantity">
+        <span class="minus" data-id='${item.productId},${item.name},${item.price},${item.image}'> - </span>
+        <span> ${item.quantity} </span>
+        <span class="plus" data-id='${item.productId},${item.name},${item.price},${item.image}'> + </span>
+        </div>
+        `;
+
+      cartList.appendChild(newItem);
+    });
+
+    if (firstLoad) {
+      cartQuantity.innerHTML = totalQuantity;
+    }
+  }
+
+  // get document elements
+  let body = document.querySelector("body");
+  let iconCart = document.querySelector(".icon-cart");
+  let totalHTML = document.querySelector(".icon-cart span");
+  let closeBtn = document.querySelector(".cartTab .close");
+  const navDropdownBtn = document.querySelector(".ri-menu-line");
+  const navDropdown = document.querySelector(".nav__dropdown");
+  const navSearch = document.getElementById("nav-search");
+  const navSearchBtn = document.querySelector(".ri-search-2-line");
+  const searchResults = document.querySelector(".search__items");
+  const checkoutBtn = document.querySelector("#checkoutBtn");
+  const cartList = document.querySelector(".listCart");
+  const cartQuantity = document.querySelector(".icon-cart span");
+
+  // add event listeners
+  window.addEventListener("load", () => refreshCart(true));
+
+  iconCart.addEventListener("click", () => {
+    body.classList.toggle("activeTabCart");
+  });
+  closeBtn.addEventListener("click", () => {
+    body.classList.toggle("activeTabCart");
+  });
+
+  navSearchBtn.addEventListener("click", () => {
+    navSearch.classList.toggle("open");
+  });
+
+  navDropdownBtn.addEventListener("click", () => {
+    navDropdownBtn.classList.toggle("nav__dropdown__animation");
+    navDropdown.classList.toggle("hidden");
+  });
+
+  cartQuantity.addEventListener("DOMSubtreeModified", () => refreshCart(false));
+
+  let timer;
+  navSearch.addEventListener("input", () => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+
+    if (!navSearch.value) {
+      searchResults.classList.add("hidden");
+    }
+
+    timer = setTimeout(async () => {
+      const data = await getSearch(navSearch.children[0].value);
+      searchResults.innerHTML = "";
+      searchResults.classList.toggle("hidden");
+
+      if (data.length < 1) {
+        searchResults.innerHTML =
+          "<p style='text-align:center;'>Unable to Find Products</p>";
+      } else {
+        data.forEach((element) => {
+          searchResults.innerHTML += `<a href='http://localhost:3000/product?id=${element.id}'>${element.name}</a>`;
+        });
+      }
+    }, 1000);
+  });
+
+  checkoutBtn.addEventListener("click", async () => {
+    await postCheckout();
+  });
+</script>

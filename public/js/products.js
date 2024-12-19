@@ -1,7 +1,7 @@
-import { getProducts, postCheckout } from "./helpers";
+import { getProducts, postCheckout } from "./helpers.js";
 import { navbar, initNav } from "./template/navbar";
 import { cart, initCart } from "./template/cart";
-import { message, initMessage } from "./template/message";
+import { message, initMessage } from "./message";
 
 let productContent = document.getElementById("contentTab");
 
@@ -14,20 +14,7 @@ const loadContent = () => {
 
   data.map((e, i) => {
     productContent.innerHTML += `
-    <div class="item">
-    <a href="detail.html?id=${e.id}">
-    <img src="${e.image[1]}" loading="lazy"/>
-    </a>
-    <div>
-    <p>${e.name.toLowerCase()}</p>
-    <div class="price">$${Math.round(e.price)}</div>
-    <button class="addCart" data-id='${e.id},${e.name},${e.price},${
-      e.image[1]
-    }'>
-    Add To Cart
-    </button>
-    <div/>
-    </div>
+    
     `;
   });
 };
