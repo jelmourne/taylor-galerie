@@ -12,4 +12,4 @@ class Product {
       (this.quantity = qty);
   }
 }
-module.exports = Product;
+exports.Product = Product;

@@ -40,69 +40,10 @@
     </div>
   </div>
 </nav>
-<script>
-  // functions
-  async function getSearch(name) {
-    const data = await fetch(
-      `http://localhost:3000/api/products/search?name=${name}`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+<script type="module">
+  import { getSearch, postCheckout } from "/js/helpers.js";
+  import { refreshCart } from "/js/cart.js";
 
-    return data;
-  }
-
-  async function postCheckout() {
-    const cartItems = JSON.parse(sessionStorage.getItem("cart"));
-
-    await fetch("http://localhost:3000/api/checkout", {
-      method: "POST",
-      body: JSON.stringify({ cart: cartItems }),
-    })
-      .then((res) => {
-        console.log(res.json());
-        //location.replace(res.json());
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
-  }
-
-  function refreshCart(firstLoad) {
-    let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-    cartList.innerHTML = null;
-    let totalQuantity = 0;
-
-    cart.forEach((item) => {
-      totalQuantity += item.quantity;
-      let newItem = document.createElement("div");
-      newItem.classList.add("item");
-      newItem.innerHTML = `
-        <div class="image">
-        <img src="${item.image}">
-        </div>
-        <div class="name">${item.name}</div>
-        <div class="totalPrice">${item.price}</div>
-        <div class="quantity">
-        <span class="minus" data-id='${item.productId},${item.name},${item.price},${item.image}'> - </span>
-        <span> ${item.quantity} </span>
-        <span class="plus" data-id='${item.productId},${item.name},${item.price},${item.image}'> + </span>
-        </div>
-        `;
-
-      cartList.appendChild(newItem);
-    });
-
-    if (firstLoad) {
-      cartQuantity.innerHTML = totalQuantity;
-    }
-  }
-
-  // get document elements
   let body = document.querySelector("body");
   let iconCart = document.querySelector(".icon-cart");
   let totalHTML = document.querySelector(".icon-cart span");
@@ -113,8 +54,6 @@
   const navSearchBtn = document.querySelector(".ri-search-2-line");
   const searchResults = document.querySelector(".search__items");
   const checkoutBtn = document.querySelector("#checkoutBtn");
-  const cartList = document.querySelector(".listCart");
-  const cartQuantity = document.querySelector(".icon-cart span");
 
   // add event listeners
   window.addEventListener("load", () => refreshCart(true));
@@ -134,8 +73,6 @@
     navDropdownBtn.classList.toggle("nav__dropdown__animation");
     navDropdown.classList.toggle("hidden");
   });
-
-  cartQuantity.addEventListener("DOMSubtreeModified", () => refreshCart(false));
 
   let timer;
   navSearch.addEventListener("input", () => {

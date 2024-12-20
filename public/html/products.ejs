@@ -36,30 +36,8 @@
     </div>
     <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
   </body>
-  <script>
-    function setItemCart(id, name, price, image, quantity) {
-      let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-
-      let existingProduct = cart.find((item) => item.id === id);
-      if (existingProduct) {
-        existingProduct.quantity += quantity;
-      } else {
-        cart.push({ id, name, price, image, quantity });
-      }
-
-      sessionStorage.setItem("cart", JSON.stringify(cart));
-
-      updateCartCount();
-    }
-
-    function updateCartCount() {
-      const cartItems = JSON.parse(sessionStorage.getItem("cart")) || [];
-      const cartCount = cartItems.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      document.querySelector(".icon-cart span").textContent = cartCount;
-    }
+  <script type="module">
+    import { setItemCart } from "/js/cart.js";
 
     document.querySelectorAll(".addCart").forEach((button) => {
       button.addEventListener("click", (e) => {

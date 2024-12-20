@@ -6,12 +6,14 @@ const { client, stripe } = require("../config/config.cjs");
 router = express.Router();
 
 router.post("/", async (req, res) => {
+  const cart = JSON.parse(req.body.cart);
+
   let { error, data } = await client
     .from("products")
     .select("*")
     .in(
       "id",
-      req.body.cart.map((v) => v.productId)
+      cart.map((v) => v.id)
     );
 
   if (error) {
@@ -20,8 +22,8 @@ router.post("/", async (req, res) => {
   }
 
   let products = data.map((e) => {
-    let temp = req.body.cart.find((v) => {
-      return v.productId == e.id;
+    let temp = cart.find((v) => {
+      return v.id == e.id;
     });
 
     return new Product(
@@ -36,14 +38,12 @@ router.post("/", async (req, res) => {
   const session = await stripe.checkout.sessions.create({
     line_items: products,
     mode: "payment",
-    success_url: `${"https://localhost:3000"}/destination?message="success"`,
-    cancel_url: `${"https://localhost:3000"}/destination?message="error"`,
+    success_url: `${"https://localhost:3000"}/?message="success"`,
+    cancel_url: `${"https://localhost:3000"}/?message="error"`,
   });
   res.send({ session });
 });
 
-router.post("/add", (req,res) => {
-  
-})
+router.post("/add", (req, res) => {});
 
 module.exports = router;

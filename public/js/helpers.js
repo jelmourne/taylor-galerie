@@ -1,3 +1,36 @@
+export async function getSearch(name) {
+  const data = await fetch(
+    `http://localhost:3000/api/products/search?name=${name}`
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+
+  return data;
+}
+
+export async function postCheckout() {
+  const cartItems = sessionStorage.getItem("cart");
+
+  const session = await fetch("http://localhost:3000/api/checkout", {
+    method: "POST",
+    mode: "cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cart: cartItems }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+
+  location.replace(session.session.url);
+}
+
 /*
       
 export async function postEmail(message) {
