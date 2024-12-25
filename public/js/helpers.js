@@ -31,31 +31,18 @@ export async function postCheckout() {
   location.replace(session.session.url);
 }
 
-/*
-      
-export async function postEmail(message) {
-  await api
-    .post("/email", { message: message })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
-}
-
 async function sendMessage(room, message) {
-  const data = await api
-    .post("/messages", {
-      id: room,
-      message: message,
-      is_client: true,
-    })
+  const data = await fetch("http://localhost:3000/api/messages/message", {
+    method: "POST",
+    mode: "cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: room, message: message, is_client: true }),
+  })
     .then((res) => {
       return res.data;
     })
     .catch((err) => {
-      console.log(err);
+      throw new Error(err);
     });
 
   return data;
@@ -74,6 +61,19 @@ export async function postMessage(message) {
 
   await sendMessage(room, message);
 }
+/*
+      
+export async function postEmail(message) {
+  await api
+    .post("/email", { message: message })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      throw new Error(err);
+      });
+}
+
 
 export async function getMessages(chat_room) {
   const data = api
