@@ -1,7 +1,7 @@
 3. add email
 
+1. hover image cycle 
+
+2. add image carosel
+
 4. dashboard
-
-5. routing
-
-6. convert to ejs modules/replace api

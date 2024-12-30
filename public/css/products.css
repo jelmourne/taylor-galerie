@@ -207,6 +207,8 @@ body.activeTabCart .cartTab {
 .detail .image img {
   width: 100%;
   z-index: -1;
+  aspect-ratio: 1/1;
+  object-fit: cover;
 }
 
 .detail .image {
@@ -232,6 +234,12 @@ body.activeTabCart .cartTab {
   margin: 0 0 10px 0;
 }
 
+.detail .sku {
+  font-size: medium;
+  color: #353432;
+  margin: -15px 0 10px 0;
+}
+
 .detail .price {
   font-weight: bold;
   font-size: x-large;
@@ -242,6 +250,7 @@ body.activeTabCart .cartTab {
 .detail .buttons button {
   background-color: #eee;
   border: none;
+  margin-bottom: 10px;
   padding: 15px 20px;
   border-radius: 20px;
   font-family: Poppins;
@@ -257,7 +266,10 @@ body.activeTabCart .cartTab {
   color: #eee;
   display: inline-flex;
   gap: 20px;
-  box-shadow: 0 10px 20px #2f2f2f77;
+}
+
+.detail .buttons button:hover {
+  filter: brightness(95%);
 }
 
 .detail .buttons svg {

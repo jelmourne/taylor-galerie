@@ -4,7 +4,7 @@ const cors = require("cors");
 var expressWs = require("express-ws");
 
 const { client } = require("./server/config/config.cjs");
-const { getCategories } = require("./server/helpers.cjs");
+const { getCategories, getSimilarProducts } = require("./server/helpers.cjs");
 
 const productApi = require("./server/api/product.cjs");
 const checkoutApi = require("./server/api/checkout.cjs");
@@ -35,11 +35,7 @@ app.ws("/ws/messages?:chat_room", async (ws, req) => {
     .eq("chat_room", chat_room)
     .order("sent_at");
 
-  if (error) {
-    throw new Error(error);
-  }
-
-  if (data.length > 0) {
+  if (data.length > 0 && data != null) {
     ws.send(JSON.stringify(data));
   }
 
@@ -103,8 +99,36 @@ app.get("/products", async (req, res) => {
   res.render("products", { products: data, categories: categories });
 });
 
-app.get("/product/:id", (req, res) => {
-  res.render("product");
+app.get("/product/:id", async (req, res) => {
+  const categories = await getCategories();
+
+  const id = req.params.id;
+
+  if (!id) {
+    return;
+  }
+
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    throw new Error(error);
+  }
+  const similarProd = await getSimilarProducts(data);
+
+  res.render("product", {
+    product: data,
+    categories: categories,
+    similarProducts: similarProd,
+  });
+});
+
+app.get("/contact", async (req, res) => {
+  const categories = await getCategories();
+  res.render("contact", { categories: categories });
 });
 
 app.listen(3000, () => {

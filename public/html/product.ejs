@@ -5,34 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
-    <link rel="stylesheet" href="/styles/products.css" />
-    <link rel="stylesheet" href="/styles/main.css" />
+    <link rel="stylesheet" href="/css/products.css" />
+    <link rel="stylesheet" href="/css/main.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
       rel="stylesheet"
     />
   </head>
   <body>
-    <div id="app"></div>
+    <%- include('layouts/navbar', {categories:categories}); -%>
     <div id="temporaryContent">
       <div class="detail">
-        <div class="image"><img src="" /></div>
+        <div class="image">
+          <img src="<%= product.image[1]%>" alt="<%=product.alt_text%>" />
+        </div>
         <div class="content">
-          <div class="name"></div>
-          <div class="price"></div>
+          <div class="name"><%=product.name%></div>
+          <div class="sku"><%=product.sku%></div>
+          <div class="price"><%=product.price%></div>
           <div class="buttons">
             <button>Checkout</button>
             <button class="addCart" data-id="">Add to Cart</button>
           </div>
-          <div class="description"></div>
+          <div class="description"><%=product.description%></div>
         </div>
         <div class="title">Similar Products</div>
       </div>
-      <div class="similarProduct"></div>
+      <div class="similarProduct">
+        <% similarProducts.map((e, i) => { %>
+        <div class="item">
+          <a href="product/<%= e.id %>">
+            <img src="<%= e.image[1] %>" />
+          </a>
+          <div>
+            <p><%= e.name.toLowerCase() %></p>
+            <div class="price"><%= e.price %></div>
+            <button
+              class="addCart"
+              data-id="<%= e.id %>,<%= e.name %>,<%= e.price %>,<%= e.image[1] %>"
+            >
+              Add To Cart
+            </button>
+          </div>
+        </div>
+        <% }) %>
+      </div>
     </div>
-
-    <script src="../detail.js" type="module"></script>
-    <script src="../helpers.js" type="module"></script>
-    <script src="../template/navbar.js" type="module"></script>
   </body>
 </html>

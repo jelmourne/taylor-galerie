@@ -20,4 +20,21 @@ async function getCategories() {
   return categories;
 }
 
+async function getSimilarProducts(product) {
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("category", product.category)
+    .neq("id", product.id)
+    .order("id")
+    .limit(10);
+
+  if (error) {
+    throw new Error(error);
+  }
+
+  return data;
+}
+
 exports.getCategories = getCategories;
+exports.getSimilarProducts = getSimilarProducts;
