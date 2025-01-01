@@ -18,6 +18,11 @@
       <div class="detail">
         <div class="image">
           <img src="<%= product.image[1]%>" alt="<%=product.alt_text%>" />
+          <div class="imageCarousel">
+            <% product.image.map((i,j) => { %>
+            <img src="<%= i %>" />
+            <% }) %>
+          </div>
         </div>
         <div class="content">
           <div class="name"><%=product.name%></div>
@@ -25,7 +30,12 @@
           <div class="price"><%=product.price%></div>
           <div class="buttons">
             <button>Checkout</button>
-            <button class="addCart" data-id="">Add to Cart</button>
+            <button
+              class="addCart"
+              data-id="<%= product.id %>,<%= product.name %>,<%= product.price %>,<%= product.image[1] %>"
+            >
+              Add to Cart
+            </button>
           </div>
           <div class="description"><%=product.description%></div>
         </div>
@@ -34,8 +44,8 @@
       <div class="similarProduct">
         <% similarProducts.map((e, i) => { %>
         <div class="item">
-          <a href="product/<%= e.id %>">
-            <img src="<%= e.image[1] %>" />
+          <a href="/product/<%= e.id %>">
+            <img src="<%= e.image[1] %>" alt="<%= e.image[0] %>" />
           </a>
           <div>
             <p><%= e.name.toLowerCase() %></p>
@@ -51,5 +61,23 @@
         <% }) %>
       </div>
     </div>
+    <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
   </body>
+  <script type="module">
+    import { setItemCart } from "/js/cart.js";
+
+    const button = document.querySelector(".addCart");
+    const carousel = document.querySelector(".imageCarousel");
+
+    carousel.addEventListener("click", (e) => {
+      console.log(e);
+    });
+
+    document.querySelectorAll(".addCart").forEach((button) => {
+      button.addEventListener("click", (e) => {
+        const [id, name, price, image] = e.target.dataset.id.split(",");
+        setItemCart(id, name, price, image, 1);
+      });
+    });
+  </script>
 </html>

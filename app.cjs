@@ -115,7 +115,7 @@ app.get("/product/:id", async (req, res) => {
     .single();
 
   if (error) {
-    throw new Error(error);
+    console.log(error);
   }
   const similarProd = await getSimilarProducts(data);
 
@@ -129,6 +129,11 @@ app.get("/product/:id", async (req, res) => {
 app.get("/contact", async (req, res) => {
   const categories = await getCategories();
   res.render("contact", { categories: categories });
+});
+
+app.get("/*", async (req, res) => {
+  const categories = await getCategories();
+  res.render("error", { categories: categories });
 });
 
 app.listen(3000, () => {

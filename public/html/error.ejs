@@ -7,28 +7,23 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/products.css" />
     <title>Web Design Mastery | furni.shop</title>
   </head>
   <body>
     <%- include('layouts/navbar', {categories:categories}); -%>
-    <header class="section__container header__container" id="home">
-      <div class="header__image">
-        <img src="contact.AVIF" alt="header" />
+    <div class="errorPage">
+      <div>
+        <i class="ri-bug-fill"></i>
+        <p>404</p>
       </div>
-      <div class="header__content">
-        <div>
-          <h1>Contact Us</h1>
-          <p>
-            Send us an email and we'll get back to you as soon as possible. For
-            more urgent request use our message box to chat with an agent.
-          </p>
-        </div>
-      </div>
-    </header>
-    <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
+      <p>
+        Couldn't Find the page you are looking for return <a href="/">Home</a>
+      </p>
+    </div>
+
+    <%-include('layouts/message'); %> <%- include('layouts/footer'); -%>
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

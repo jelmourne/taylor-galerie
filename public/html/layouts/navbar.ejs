@@ -7,7 +7,7 @@
         <ul id="lighting">
           <% categories.map((e, i) => { %>
           <li>
-            <a href="products?category=<%= e %>"> <%= e %> </a>
+            <a href="/products?category=<%= e %>"> <%= e %> </a>
           </li>
 
           <% })%>
@@ -94,7 +94,7 @@
           "<p style='text-align:center;'>Unable to Find Products</p>";
       } else {
         data.forEach((element) => {
-          searchResults.innerHTML += `<a href='http://localhost:3000/product?id=${element.id}'>${element.name}</a>`;
+          searchResults.innerHTML += `<a href='/product/${element.id}'>${element.name}</a>`;
         });
       }
     }, 1000);

@@ -22,48 +22,49 @@
     }
   });
 
-  const ws = new WebSocket(
-    `ws://localhost:3000/ws/messages?chat_room=${sessionStorage.getItem(
-      "chat_room"
-    )}`
-  );
+  if (localStorage.getItem("chat_room")) {
+    const ws = new WebSocket(
+      `ws://localhost:3000/ws/messages?chat_room=${sessionStorage.getItem(
+        "chat_room"
+      )}`
+    );
+    messageBoxText.addEventListener("keydown", async (e) => {
+      if (e.keyCode == 13) {
+        if (messageBoxText.value == "") {
+          e.preventDefault();
+          messageBoxText.value = "";
 
-  messageBoxText.addEventListener("keydown", async (e) => {
-    if (e.keyCode == 13) {
-      if (messageBoxText.value == "") {
+          return false;
+        }
         e.preventDefault();
+        ws.send(
+          JSON.stringify({
+            msg: messageBoxText.value,
+            is_client: true,
+          })
+        );
+
         messageBoxText.value = "";
 
         return false;
       }
-      e.preventDefault();
-      ws.send(
-        JSON.stringify({
-          msg: messageBoxText.value,
-          is_client: true,
-        })
-      );
+    });
 
-      messageBoxText.value = "";
+    ws.addEventListener("message", (e) => {
+      const msg = JSON.parse(e.data);
 
-      return false;
-    }
-  });
-
-  ws.addEventListener("message", (e) => {
-    const msg = JSON.parse(e.data);
-
-    if (msg.length > 0) {
-      msg.forEach((e) => {
+      if (msg.length > 0) {
+        msg.forEach((e) => {
+          messageWindow.innerHTML += `<div class=${
+            e.is_client ? "sender" : "recieved"
+          }><span>${e.message}</span></div>`;
+        });
+      } else {
         messageWindow.innerHTML += `<div class=${
-          e.is_client ? "sender" : "recieved"
-        }><span>${e.message}</span></div>`;
-      });
-    } else {
-      messageWindow.innerHTML += `<div class=${
-        msg.is_client ? "sender" : "recieved"
-      }><span>${msg.message}</span></div>`;
-      messageWindow.scrollTop = messageWindow.scrollHeight;
-    }
-  });
+          msg.is_client ? "sender" : "recieved"
+        }><span>${msg.message}</span></div>`;
+        messageWindow.scrollTop = messageWindow.scrollHeight;
+      }
+    });
+  }
 </script>

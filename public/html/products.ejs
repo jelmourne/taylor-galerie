@@ -18,7 +18,7 @@
         <% products.map((e, i) => { %>
         <div class="item">
           <a href="/product/<%= e.id %>">
-            <img src="<%= e.image[1] %>" loading="lazy" />
+            <img src="<%= e.image[1] %>" alt="<%= e.image[0] %>" />
           </a>
           <div>
             <p><%= e.name.toLowerCase() %></p>
@@ -40,6 +40,19 @@
     import { setItemCart } from "/js/cart.js";
 
     document.querySelectorAll(".addCart").forEach((button) => {
+      const image = button.parentNode.parentNode.children[0];
+      image.addEventListener("mouseover", (e) => {
+        var temp = e.target.src;
+        e.target.src = e.target.alt;
+        e.target.alt = temp;
+      });
+
+      image.addEventListener("mouseleave", (e) => {
+        var temp = e.target.children[0].src;
+        e.target.children[0].src = e.target.children[0].alt;
+        e.target.children[0].alt = temp;
+      });
+
       button.addEventListener("click", (e) => {
         const [id, name, price, image] = e.target.dataset.id.split(",");
         setItemCart(id, name, price, image, 1);

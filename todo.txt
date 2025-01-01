@@ -1,7 +1,9 @@
 3. add email
 
-1. hover image cycle 
-
-2. add image carosel
+2. add image carosel (cannot add event listener)
 
 4. dashboard
+
+5. Fix websocket 
+
+7. fix cart slow when too many requests

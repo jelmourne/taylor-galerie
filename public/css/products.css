@@ -216,18 +216,6 @@ body.activeTabCart .cartTab {
   z-index: -1;
 }
 
-.detail .image::before {
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  content: "";
-  background-color: #94817733;
-  z-index: -1;
-  border-radius: 190px 100px 170px 180px;
-  left: calc(50% - 150px);
-  top: 50px;
-}
-
 .detail .name {
   font-size: xx-large;
   padding: 40px 0 0 0;
@@ -285,6 +273,29 @@ body.activeTabCart .cartTab {
   display: flex;
   gap: 10px;
   overflow-x: scroll;
+}
+
+.imageCarousel {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.imageCarousel img {
+  cursor: pointer;
+  height: 100px;
+  max-width: 100px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.similarProduct .item img {
+  z-index: -1;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  max-height: 300px;
+  max-width: 300px;
 }
 
 .contactForm {
@@ -455,15 +466,22 @@ input[type="email"]:hover {
   border-radius: 10px;
 }
 
-.blur {
-  position: fixed;
-  z-index: 9998;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #33333377;
-  backdrop-filter: blur(8px);
+.errorPage {
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorPage div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.errorPage div {
+  font-size: 150px;
 }
 
 @media screen and (max-width: 992px) {
