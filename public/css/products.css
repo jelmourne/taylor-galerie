@@ -299,17 +299,8 @@ body.activeTabCart .cartTab {
 }
 
 .contactForm {
-  filter: none;
-  background-color: #fff;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 20px;
-  backdrop-filter: blur(20px);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 9999;
+  width: 35%;
 }
 
 .contactForm form {
@@ -318,26 +309,15 @@ body.activeTabCart .cartTab {
   gap: 20px;
 }
 
+.contactForm label {
+  margin-bottom: -15px;
+}
+
 .contactForm p {
   font-family: poppins;
   text-align: center;
   margin-bottom: 20px;
   font-size: x-large;
-}
-.contactForm img {
-  width: 20vw;
-}
-.contactForm div {
-  display: flex;
-  align-items: center;
-}
-
-.contactForm i {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  right: 0;
-  margin: 15px;
 }
 
 .contactForm input[type="text"],
@@ -426,13 +406,13 @@ input[type="email"]:hover {
 .messageBox textarea {
   resize: none;
   margin-inline-start: 10px;
-  width: 75%;
+  width: 70%;
 }
 
 .messageWindow {
   height: 215px;
   max-height: 215px;
-  margin: 15px 15px 5px 15px;
+  margin: 15px 15px 25px 15px;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;

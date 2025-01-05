@@ -1,9 +1,3 @@
-3. add email
-
-2. add image carosel (cannot add event listener)
-
-4. dashboard
-
-5. Fix websocket 
+3. add email need davey to send confimation code
 
 7. fix cart slow when too many requests

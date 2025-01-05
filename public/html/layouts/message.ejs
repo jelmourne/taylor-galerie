@@ -8,63 +8,63 @@
   </div>
 </div>
 <script type="module">
-  import { postMessage } from "/js/helpers.js";
+  import { createRoom, baseUrl } from "/js/helpers.js";
   const messageButton = document.querySelector(".ri-chat-1-line");
   const messageBox = document.querySelector(".messageBox");
   const messageBoxText = document.querySelector("#messageBox");
   const messageWindow = document.querySelector(".messageWindow");
+  var chat_room;
+  var ws;
 
   messageButton.addEventListener("click", () => {
     if (messageBox.classList.contains("hidden")) {
       messageBox.classList.remove("hidden");
+      chat_room = sessionStorage.getItem("chat_room") || createRoom();
+      ws = ws
+        ? ws
+        : new WebSocket(`ws://${baseUrl()}/ws/messages?chat_room=${chat_room}`);
+
+      ws.addEventListener("message", (e) => {
+        const msg = JSON.parse(e.data);
+
+        if (msg.length > 0) {
+          msg.forEach((e) => {
+            messageWindow.innerHTML += `<div class=${
+              e.is_client ? "sender" : "recieved"
+            }><span>${e.message}</span></div>`;
+          });
+        } else {
+          messageWindow.innerHTML += `<div class=${
+            msg.is_client ? "sender" : "recieved"
+          }><span>${msg.message}</span></div>`;
+          messageWindow.scrollTop = messageWindow.scrollHeight;
+        }
+      });
     } else {
       messageBox.classList.add("hidden");
     }
   });
 
-  if (localStorage.getItem("chat_room")) {
-    const ws = new WebSocket(
-      `ws://localhost:3000/ws/messages?chat_room=${sessionStorage.getItem(
-        "chat_room"
-      )}`
-    );
-    messageBoxText.addEventListener("keydown", async (e) => {
-      if (e.keyCode == 13) {
-        if (messageBoxText.value == "") {
-          e.preventDefault();
-          messageBoxText.value = "";
-
-          return false;
-        }
+  messageBoxText.addEventListener("keydown", async (e) => {
+    if (e.keyCode == 13) {
+      if (messageBoxText.value == "") {
         e.preventDefault();
-        ws.send(
-          JSON.stringify({
-            msg: messageBoxText.value,
-            is_client: true,
-          })
-        );
-
         messageBoxText.value = "";
 
         return false;
       }
-    });
+      e.preventDefault();
 
-    ws.addEventListener("message", (e) => {
-      const msg = JSON.parse(e.data);
+      ws.send(
+        JSON.stringify({
+          msg: messageBoxText.value,
+          is_client: true,
+        })
+      );
 
-      if (msg.length > 0) {
-        msg.forEach((e) => {
-          messageWindow.innerHTML += `<div class=${
-            e.is_client ? "sender" : "recieved"
-          }><span>${e.message}</span></div>`;
-        });
-      } else {
-        messageWindow.innerHTML += `<div class=${
-          msg.is_client ? "sender" : "recieved"
-        }><span>${msg.message}</span></div>`;
-        messageWindow.scrollTop = messageWindow.scrollHeight;
-      }
-    });
-  }
+      messageBoxText.value = "";
+
+      return false;
+    }
+  });
 </script>

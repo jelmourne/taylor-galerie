@@ -167,6 +167,19 @@ nav {
   color: var(--text-light);
 }
 
+.contact__body {
+  display: inline-flex;
+  align-items: center;
+  width: 90%;
+  gap: 10px;
+}
+
+.contact__body form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 @media (width > 768) {
 }
 nav {
@@ -326,6 +339,7 @@ nav {
 }
 
 .footer {
+  margin-top: 20px;
   background-color: var(--primary-color);
   overflow-x: hidden;
 }

@@ -8,6 +8,7 @@ const { getCategories, getSimilarProducts } = require("./server/helpers.cjs");
 
 const productApi = require("./server/api/product.cjs");
 const checkoutApi = require("./server/api/checkout.cjs");
+const emailApi = require("./server/api/email.cjs");
 
 // app initialization
 const app = express();
@@ -24,10 +25,15 @@ app.use("/node_modules", express.static(__dirname + "/node_modules/"));
 // api routes
 app.use("/api/products", productApi);
 app.use("/api/checkout", checkoutApi);
+app.use("/api/email", emailApi);
 
 // message websocket
 app.ws("/ws/messages?:chat_room", async (ws, req) => {
   const chat_room = req.query.chat_room;
+
+  if (chat_room === null) {
+    return;
+  }
 
   const { data, error } = await client
     .from("messages")
@@ -68,9 +74,7 @@ app.ws("/ws/messages?:chat_room", async (ws, req) => {
     )
     .subscribe();
 
-  ws.on("close", () => {
-    console.log("WebSocket connection closed!");
-  });
+  ws.on("close", () => {});
 });
 
 // render routes

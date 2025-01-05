@@ -16,8 +16,14 @@
     <%- include('layouts/navbar', {categories:categories}); -%>
     <div id="temporaryContent">
       <div class="detail">
-        <div class="image">
-          <img src="<%= product.image[1]%>" alt="<%=product.alt_text%>" />
+        <div>
+          <div class="image">
+            <img
+              src="<%= product.image[1]%>"
+              alt="<%=product.alt_text%>"
+              id="mainImage"
+            />
+          </div>
           <div class="imageCarousel">
             <% product.image.map((i,j) => { %>
             <img src="<%= i %>" />
@@ -68,10 +74,13 @@
 
     const button = document.querySelector(".addCart");
     const carousel = document.querySelector(".imageCarousel");
+    const image = document.getElementById("mainImage");
 
-    carousel.addEventListener("click", (e) => {
-      console.log(e);
-    });
+    for (var c of carousel.children) {
+      c.addEventListener("click", (e) => {
+        image.src = e.target.src;
+      });
+    }
 
     document.querySelectorAll(".addCart").forEach((button) => {
       button.addEventListener("click", (e) => {

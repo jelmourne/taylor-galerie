@@ -14,24 +14,83 @@
   </head>
   <body>
     <%- include('layouts/navbar', {categories:categories}); -%>
-    <header class="section__container header__container" id="home">
-      <div class="header__image">
-        <img src="contact.AVIF" alt="header" />
-      </div>
-      <div class="header__content">
-        <div>
-          <h1>Contact Us</h1>
-          <p>
-            Send us an email and we'll get back to you as soon as possible. For
-            more urgent request use our message box to chat with an agent.
-          </p>
+    <div class="contact__body">
+      <header class="section__container header__container" id="home">
+        <div class="header__image">
+          <img src="contact.AVIF" alt="header" style="width: 100%" />
         </div>
-      </div>
-    </header>
+        <div class="header__content">
+          <div>
+            <h1>Contact Us</h1>
+            <p>
+              Send us an email and we'll get back to you as soon as possible.
+              For more urgent request use our message box to chat with an agent.
+            </p>
+          </div>
+        </div>
+      </header>
+      <form class="contactForm" id="contactForm">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          placeholder="example@gmail.com"
+          id="email"
+          value=""
+        />
+        <label for="subject">Subject</label>
+        <input type="text" placeholder="subject" id="subject" value="" />
+        <label for="inquiry">Contents</label>
+        <textarea
+          placeholder="message details"
+          id="inquiry"
+          value=""
+        ></textarea>
+        <input type="submit" id="submit" value="Send" />
+      </form>
+    </div>
     <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script src="/js/main.js" type="module"></script>
+    <script type="module">
+      import { postEmail } from "/js/helpers.js";
+
+      const scrollRevealOption = {
+        distance: "50px",
+        origin: "bottom",
+        duration: "1000",
+      };
+
+      ScrollReveal().reveal(".header__image img", {
+        ...scrollRevealOption,
+        origin: "right",
+      });
+      ScrollReveal().reveal(".header__content div", {
+        duration: 1000,
+        delay: 500,
+      });
+      ScrollReveal().reveal(".header__content h1", {
+        ...scrollRevealOption,
+        delay: 1000,
+      });
+      ScrollReveal().reveal(".header__content p", {
+        ...scrollRevealOption,
+        delay: 1500,
+      });
+
+      const email = document.getElementById("email");
+      const subject = document.getElementById("subject");
+      const inquiry = document.getElementById("inquiry");
+
+      document
+        .getElementById("contactForm")
+        .addEventListener("submit", async () => {
+          await postEmail({
+            email: email.value,
+            subject: subject.value,
+            inquiry: inquiry.value,
+          });
+        });
+    </script>
   </body>
 </html>
