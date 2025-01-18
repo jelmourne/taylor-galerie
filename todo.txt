@@ -1,3 +1,0 @@
-3. add email need davey to send confimation code
-
-7. fix cart slow when too many requests

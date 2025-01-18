@@ -213,6 +213,11 @@ nav {
   color: var(--primary-color);
 }
 
+.logo img {
+  height: 100px;
+  object-fit: contain;
+}
+
 .nav__links {
   position: static;
   padding: 0;

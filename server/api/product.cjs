@@ -73,4 +73,22 @@ router.get("/search?:name", async (req, res) => {
   res.send(data);
 });
 
+router.get("/similar?:id?:category", async (req, res) => {
+  const { id, category } = req.query;
+
+  const { data, error } = await client
+    .from("products")
+    .select("*")
+    .eq("category", category)
+    .neq("id", id)
+    .order("id")
+    .limit(10);
+
+  if (error) {
+    console.log(error);
+  }
+
+  res.send(data);
+});
+
 module.exports = router;

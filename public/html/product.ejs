@@ -47,34 +47,44 @@
         </div>
         <div class="title">Similar Products</div>
       </div>
-      <div class="similarProduct">
-        <% similarProducts.map((e, i) => { %>
-        <div class="item">
-          <a href="/product/<%= e.id %>">
-            <img src="<%= e.image[1] %>" alt="<%= e.image[0] %>" />
-          </a>
-          <div>
-            <p><%= e.name.toLowerCase() %></p>
-            <div class="price"><%= e.price %></div>
-            <button
-              class="addCart"
-              data-id="<%= e.id %>,<%= e.name %>,<%= e.price %>,<%= e.image[1] %>"
-            >
-              Add To Cart
-            </button>
-          </div>
-        </div>
-        <% }) %>
-      </div>
+      <div
+        class="similarProduct"
+        data-prod="<%= product.id %>, <%= product.category %>"
+      ></div>
     </div>
     <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
   </body>
   <script type="module">
     import { setItemCart } from "/js/cart.js";
+    import { getSimilar } from "/js/helpers.js";
 
     const button = document.querySelector(".addCart");
     const carousel = document.querySelector(".imageCarousel");
     const image = document.getElementById("mainImage");
+    const similarProduct = document.querySelector(".similarProduct");
+
+    const [id, category] = similarProduct.dataset.prod.split(",");
+
+    const data = await getSimilar(id, category.trim());
+
+    data.map((e, i) => {
+      similarProduct.innerHTML += `
+    <div class="item">
+      <a href="/product/${e.id}">
+        <img src="${e.image[1]}" alt="${e.image[0]}" />
+      </a>
+      <div>
+        <p>${e.name.toLowerCase()}</p>
+        <div class="price">${e.price}</div>
+        <button
+          class="addCart"
+          data-id="${e.id},${e.name},${e.price},${e.image[1]}"
+        >
+          Add To Cart
+        </button>
+      </div>
+    </div>`;
+    });
 
     for (var c of carousel.children) {
       c.addEventListener("click", (e) => {

@@ -38,6 +38,19 @@ export async function postCheckout() {
   location.replace(session.session.url);
 }
 
+export async function getSimilar(id, category) {
+  const data = await fetch(
+    `http://${baseUrl()}/api/products/similar?id=${id}&category=${category}`
+  )
+    .then((res) => {
+      return res.json();
+    })
+    .catch((err) => {
+      throw new Error(err);
+    });
+  return data;
+}
+
 export function createRoom() {
   if (sessionStorage.getItem("chat_room")) {
     return;

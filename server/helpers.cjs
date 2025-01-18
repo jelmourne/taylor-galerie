@@ -21,16 +21,18 @@ async function getCategories() {
 }
 
 async function getSimilarProducts(product) {
+  const [id, category] = await product;
+
   const { data, error } = await client
     .from("products")
     .select("*")
-    .eq("category", product.category)
-    .neq("id", product.id)
+    .eq("category", category)
+    .neq("id", id)
     .order("id")
     .limit(10);
 
   if (error) {
-    throw new Error(error);
+    console.log(error);
   }
 
   return data;

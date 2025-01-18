@@ -4,7 +4,7 @@ const cors = require("cors");
 var expressWs = require("express-ws");
 
 const { client } = require("./server/config/config.cjs");
-const { getCategories, getSimilarProducts } = require("./server/helpers.cjs");
+const { getCategories } = require("./server/helpers.cjs");
 
 const productApi = require("./server/api/product.cjs");
 const checkoutApi = require("./server/api/checkout.cjs");
@@ -16,6 +16,7 @@ expressWs(app);
 
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.set("view engine", "ejs");
@@ -112,7 +113,7 @@ app.get("/product/:id", async (req, res) => {
     return;
   }
 
-  const { data, error } = await client
+  const { data, error, similar } = await client
     .from("products")
     .select("*")
     .eq("id", id)
@@ -121,12 +122,10 @@ app.get("/product/:id", async (req, res) => {
   if (error) {
     console.log(error);
   }
-  const similarProd = await getSimilarProducts(data);
 
   res.render("product", {
     product: data,
     categories: categories,
-    similarProducts: similarProd,
   });
 });
 

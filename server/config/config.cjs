@@ -1,4 +1,5 @@
 const supabase = require("@supabase/supabase-js");
+const sgMail = require("@sendgrid/mail");
 require("dotenv").config();
 
 exports.client = supabase.createClient(
@@ -7,3 +8,5 @@ exports.client = supabase.createClient(
 );
 
 exports.stripe = require("stripe")(process.env.STRIPE_SK);
+
+exports.mail = sgMail.setApiKey(process.env.SGMAIL_SK);

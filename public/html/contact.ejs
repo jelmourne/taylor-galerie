@@ -84,7 +84,8 @@
 
       document
         .getElementById("contactForm")
-        .addEventListener("submit", async () => {
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
           await postEmail({
             email: email.value,
             subject: subject.value,
