@@ -35,7 +35,7 @@
           <div class="sku"><%=product.sku%></div>
           <div class="price"><%=product.price%></div>
           <div class="buttons">
-            <button>Checkout</button>
+            <button id="productCheckout">Checkout</button>
             <button
               class="addCart"
               data-id="<%= product.id %>,<%= product.name %>,<%= product.price %>,<%= product.image[1] %>"
@@ -56,12 +56,13 @@
   </body>
   <script type="module">
     import { setItemCart } from "/js/cart.js";
-    import { getSimilar } from "/js/helpers.js";
+    import { getSimilar, postSingleCheckout } from "/js/helpers.js";
 
     const button = document.querySelector(".addCart");
     const carousel = document.querySelector(".imageCarousel");
     const image = document.getElementById("mainImage");
     const similarProduct = document.querySelector(".similarProduct");
+    const prodCheckout = document.getElementById("productCheckout");
 
     const [id, category] = similarProduct.dataset.prod.split(",");
 
@@ -97,6 +98,10 @@
         const [id, name, price, image] = e.target.dataset.id.split(",");
         setItemCart(id, name, price, image, 1);
       });
+    });
+
+    prodCheckout.addEventListener("click", async () => {
+      await postSingleCheckout(id);
     });
   </script>
 </html>
