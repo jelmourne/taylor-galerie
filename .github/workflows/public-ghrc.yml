@@ -12,6 +12,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: build and public container
         run: |
-          docker login --username jelmourne --password-stdin ${{secrets.GH_SK}} ghcr.io
+          docker login -u jelmourne -p ${{secrets.GH_SK}} ghcr.io
           docker build . --tag ghcr.io/jelmourne/taylor-galarie-ghcr:latest
           docker push ghcr.io/jelmourne/taylor-galarie-ghcr:latest
