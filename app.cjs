@@ -4,7 +4,7 @@ const cors = require("cors");
 var expressWs = require("express-ws");
 
 const { client } = require("./server/config/config.cjs");
-const { getCategories } = require("./server/helpers.cjs");
+const { getCategories, verifyRequest } = require("./server/helpers.cjs");
 
 const productApi = require("./server/api/product.cjs");
 const checkoutApi = require("./server/api/checkout.cjs");
@@ -27,6 +27,9 @@ app.use("/node_modules", express.static(__dirname + "/node_modules/"));
 app.use("/api/products", productApi);
 app.use("/api/checkout", checkoutApi);
 app.use("/api/email", emailApi);
+
+// restrict users from accessing api routes
+app.use("/api/*", verifyRequest);
 
 // message websocket
 app.ws("/ws/messages?:chat_room", async (ws, req) => {

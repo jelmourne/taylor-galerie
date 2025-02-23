@@ -1,6 +1,9 @@
 name: PUBLISH DOCKER IMAGE
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 env:
   REGISTRY: ghcr.io
@@ -30,6 +33,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
+            latest
             type=ref,event=branch
             type=sha
 

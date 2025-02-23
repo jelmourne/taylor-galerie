@@ -38,5 +38,19 @@ async function getSimilarProducts(product) {
   return data;
 }
 
+function verifyRequest(req, res, next) {
+  const allowedOrigin = "https://taylorgalerie.com";
+  const origin = req.get("origin");
+
+  if (origin && origin.startsWith(allowedOrigin)) {
+    next();
+  } else {
+    return res
+      .status(403)
+      .send("Forbidden: You are not authorized to access this resource");
+  }
+}
+
 exports.getCategories = getCategories;
 exports.getSimilarProducts = getSimilarProducts;
+exports.verifyRequest = verifyRequest;

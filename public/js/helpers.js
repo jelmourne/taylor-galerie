@@ -3,7 +3,7 @@ export function baseUrl() {
     return "localhost:3000";
   }
 
-  return "taylorgalarie.com";
+  return "taylorgalerie.com";
 }
 
 export function httpProtocol(ws = false) {
