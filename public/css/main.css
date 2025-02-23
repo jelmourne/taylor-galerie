@@ -292,13 +292,8 @@ nav {
   transition: all;
 }
 
-.nav__dropdown p {
-  font-weight: 500;
-  text-decoration: underline;
-}
-
-.nav__dropdown ul {
-  text-indent: 30px;
+.nav__dropdown ul li {
+  margin: 5px 0px 5px 0px;
 }
 
 .nav__dropdown ul li a:hover {

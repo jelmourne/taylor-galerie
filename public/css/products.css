@@ -446,6 +446,13 @@ input[type="email"]:hover {
   border-radius: 10px;
 }
 
+.info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .errorPage {
   height: 50vh;
   display: flex;

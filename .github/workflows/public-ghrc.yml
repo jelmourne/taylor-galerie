@@ -1,0 +1,17 @@
+name: DOCKER CI PUBLISH GHCR
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_public:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: build and public container
+        run: |
+          docker login --username jelmourne --password-stdin ${{secrets.GH_SK}} ghcr.io
+          docker build . --tag ghcr.io/jelmourne/taylor-galarie-ghcr:latest
+          docker push ghcr.io/jelmourne/taylor-galarie-ghcr:latest

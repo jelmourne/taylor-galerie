@@ -9,13 +9,13 @@ async function getCategories() {
 
   const { data, error } = await client
     .from("products")
-    .select("category")
-    .order("category");
+    .select("subcategory")
+    .order("subcategory");
 
   if (error) {
     throw new Error(error);
   }
-  categories = [...new Set(data.map((e) => e.category))];
+  categories = [...new Set(data.map((e) => e.subcategory))];
 
   return categories;
 }
@@ -26,7 +26,7 @@ async function getSimilarProducts(product) {
   const { data, error } = await client
     .from("products")
     .select("*")
-    .eq("category", category)
+    .eq("subcategory", category)
     .neq("id", id)
     .order("id")
     .limit(10);

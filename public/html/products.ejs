@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta family="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="/css/products.css" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -18,14 +18,21 @@
         <% products.map((e, i) => { %>
         <div class="item">
           <a href="/product/<%= e.id %>">
-            <img src="<%= e.image[1] %>" alt="<%= e.image[0] %>" />
+            <img
+              loading="lazy"
+              src="<%= e.image[0] %>"
+              alt="<%= e.image[1] %>"
+              onerror="this.src='<%= e.image[1] %>';"
+            />
           </a>
           <div>
-            <p><%= e.name.toLowerCase() %></p>
+            <p>
+              <%= `${e.family.toLowerCase()} ${e.subcategory.toLowerCase()}` %>
+            </p>
             <div class="price"><%= e.price %></div>
             <button
               class="addCart"
-              data-id="<%= e.id %>,<%= e.name %>,<%= e.price %>,<%= e.image[1] %>"
+              data-id="<%= e.id %>,<%= e.family %>,<%= e.price %>,<%= e.image[0] %>"
             >
               Add To Cart
             </button>
@@ -54,8 +61,8 @@
       });
 
       button.addEventListener("click", (e) => {
-        const [id, name, price, image] = e.target.dataset.id.split(",");
-        setItemCart(id, name, price, image, 1);
+        const [id, family, price, image] = e.target.dataset.id.split(",");
+        setItemCart(id, family, price, image, 1);
       });
     });
   </script>

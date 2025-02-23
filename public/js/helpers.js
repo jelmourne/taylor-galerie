@@ -1,8 +1,5 @@
 export function baseUrl() {
-  if (true) {
-    return "localhost:3000";
-  }
-  return "";
+  return "localhost:3000";
 }
 
 export async function getSearch(name) {

@@ -63,7 +63,7 @@ router.get("/search?:name", async (req, res) => {
   const { data, error } = await client
     .from("products")
     .select("*")
-    .ilike("name", `%${name}%`)
+    .ilike("family", `%${name}%`)
     .limit(4);
 
   if (error) {
@@ -79,7 +79,7 @@ router.get("/similar?:id?:category", async (req, res) => {
   const { data, error } = await client
     .from("products")
     .select("*")
-    .eq("category", category)
+    .eq("subcategory", category)
     .neq("id", id)
     .order("id")
     .limit(10);

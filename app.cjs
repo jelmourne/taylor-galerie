@@ -95,7 +95,7 @@ app.get("/products", async (req, res) => {
   const { data, error } = await client
     .from("products")
     .select("*")
-    .eq("category", category)
+    .eq("subcategory", category)
     .order("id");
 
   if (error) {
@@ -139,6 +139,8 @@ app.get("/*", async (req, res) => {
   res.render("error", { categories: categories });
 });
 
-app.listen(3000, () => {
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
   console.log(`Example app listening on port ${3000}`);
 });

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta family="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
 
     <link rel="stylesheet" href="/css/products.css" />
@@ -19,7 +19,7 @@
         <div>
           <div class="image">
             <img
-              src="<%= product.image[1]%>"
+              src="<%= product.image[0]%>"
               alt="<%=product.alt_text%>"
               id="mainImage"
             />
@@ -31,25 +31,30 @@
           </div>
         </div>
         <div class="content">
-          <div class="name"><%=product.name%></div>
+          <div class="name"><%=product.family %></div>
           <div class="sku"><%=product.sku%></div>
           <div class="price"><%=product.price%></div>
           <div class="buttons">
             <button id="productCheckout">Checkout</button>
             <button
               class="addCart"
-              data-id="<%= product.id %>,<%= product.name %>,<%= product.price %>,<%= product.image[1] %>"
+              data-id="<%= product.id %>,<%= product.family %>,<%= product.price %>,<%= product.image[0] %>"
             >
               Add to Cart
             </button>
           </div>
           <div class="description"><%=product.description%></div>
+          <div class="info">
+            <p><%=product.info%></p>
+            <p><%=product.dimentions%></p>
+            <p><%=product.box%></p>
+          </div>
         </div>
         <div class="title">Similar Products</div>
       </div>
       <div
         class="similarProduct"
-        data-prod="<%= product.id %>, <%= product.category %>"
+        data-prod="<%= product.id %>, <%= product.subcategory %>"
       ></div>
     </div>
     <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
@@ -64,22 +69,24 @@
     const similarProduct = document.querySelector(".similarProduct");
     const prodCheckout = document.getElementById("productCheckout");
 
-    const [id, category] = similarProduct.dataset.prod.split(",");
+    const [id, subcategory] = similarProduct.dataset.prod.split(",");
 
-    const data = await getSimilar(id, category.trim());
+    const data = await getSimilar(id, subcategory.trim());
 
     data.map((e, i) => {
       similarProduct.innerHTML += `
     <div class="item">
       <a href="/product/${e.id}">
-        <img src="${e.image[1]}" alt="${e.image[0]}" />
+        <img src="${e.image[0]}" alt="${e.image[1]}" onerror="this.src='${
+        e.image[1]
+      }'"/>
       </a>
       <div>
-        <p>${e.name.toLowerCase()}</p>
+        <p>${e.family.toLowerCase()}</p>
         <div class="price">${e.price}</div>
         <button
           class="addCart"
-          data-id="${e.id},${e.name},${e.price},${e.image[1]}"
+          data-id="${e.id},${e.family},${e.price},${e.image[0]}"
         >
           Add To Cart
         </button>
@@ -95,8 +102,8 @@
 
     document.querySelectorAll(".addCart").forEach((button) => {
       button.addEventListener("click", (e) => {
-        const [id, name, price, image] = e.target.dataset.id.split(",");
-        setItemCart(id, name, price, image, 1);
+        const [id, family, price, image] = e.target.dataset.id.split(",");
+        setItemCart(id, family, price, image, 1);
       });
     });
 
