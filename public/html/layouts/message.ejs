@@ -8,7 +8,7 @@
   </div>
 </div>
 <script type="module">
-  import { createRoom, baseUrl } from "/js/helpers.js";
+  import { createRoom, baseUrl, httpProtocol } from "/js/helpers.js";
   const messageButton = document.querySelector(".ri-chat-1-line");
   const messageBox = document.querySelector(".messageBox");
   const messageBoxText = document.querySelector("#messageBox");
@@ -20,9 +20,14 @@
     if (messageBox.classList.contains("hidden")) {
       messageBox.classList.remove("hidden");
       chat_room = sessionStorage.getItem("chat_room") || createRoom();
+
       ws = ws
         ? ws
-        : new WebSocket(`ws://${baseUrl()}/ws/messages?chat_room=${chat_room}`);
+        : new WebSocket(
+            `${httpProtocol(
+              true
+            )}//${baseUrl()}/ws/messages?chat_room=${chat_room}`
+          );
 
       ws.addEventListener("message", (e) => {
         const msg = JSON.parse(e.data);

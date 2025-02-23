@@ -1,10 +1,20 @@
 export function baseUrl() {
-  return "localhost:3000";
+  if (location.hostname == "localhost") {
+    return "localhost:3000";
+  }
+
+  return "taylorgalarie.com";
+}
+
+export function httpProtocol(ws = false) {
+  if (location.hostname == "localhost") return ws ? "ws:" : "http:";
+
+  return ws ? "wss:" : "https:";
 }
 
 export async function getSearch(name) {
   const data = await fetch(
-    `http://${baseUrl()}/api/products/search?name=${name}`
+    `${httpProtocol()}//${baseUrl()}/api/products/search?name=${name}`
   )
     .then((res) => {
       return res.json();
@@ -19,7 +29,7 @@ export async function getSearch(name) {
 export async function postCheckout() {
   const cartItems = sessionStorage.getItem("cart");
 
-  const session = await fetch(`http://${baseUrl()}/api/checkout`, {
+  const session = await fetch(`${httpProtocol()}//${baseUrl()}/api/checkout`, {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
@@ -36,11 +46,14 @@ export async function postCheckout() {
 }
 
 export async function postSingleCheckout(id) {
-  const session = await fetch(`http://${baseUrl()}/api/checkout/${id}`, {
-    method: "POST",
-    mode: "cors",
-    headers: { "Content-Type": "application/json" },
-  })
+  const session = await fetch(
+    `${httpProtocol()}//${baseUrl()}/api/checkout/${id}`,
+    {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+    }
+  )
     .then((res) => {
       return res.json();
     })
@@ -53,7 +66,7 @@ export async function postSingleCheckout(id) {
 
 export async function getSimilar(id, category) {
   const data = await fetch(
-    `http://${baseUrl()}/api/products/similar?id=${id}&category=${category}`
+    `${httpProtocol()}//${baseUrl()}/api/products/similar?id=${id}&category=${category}`
   )
     .then((res) => {
       return res.json();
@@ -76,7 +89,7 @@ export function createRoom() {
 }
 
 export async function postEmail(form) {
-  const response = await fetch(`http://${baseUrl()}/api/email`, {
+  const response = await fetch(`${httpProtocol()}//${baseUrl()}/api/email`, {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },

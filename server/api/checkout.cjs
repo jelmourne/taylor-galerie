@@ -24,7 +24,7 @@ router.post("/:id", async (req, res) => {
   }
 
   const product = new Product(
-    data.name,
+    `${e.family} ${e.subcategory}`,
     data.price,
     data.image[0],
     data.description,
@@ -60,8 +60,8 @@ router.post("/:id", async (req, res) => {
     ],
     line_items: [product],
     mode: "payment",
-    success_url: `${"https://localhost:3000"}/?message="success"`,
-    cancel_url: `${"https://localhost:3000"}/?message="error"`,
+    success_url: `https://${req.get("host")}/?message="success"`,
+    cancel_url: `https://${req.get("host")}/?message="error"`,
   });
   res.send({ session });
 });
@@ -91,7 +91,7 @@ router.post("/", async (req, res) => {
     });
 
     return new Product(
-      e.name,
+      `${e.family} ${e.subcategory}`,
       e.price,
       e.image[0],
       e.description,
@@ -126,14 +126,13 @@ router.post("/", async (req, res) => {
         },
       },
     ],
+
     line_items: products,
     mode: "payment",
-    success_url: `${"https://localhost:3000"}/?message="success"`,
-    cancel_url: `${"https://localhost:3000"}/?message="error"`,
+    success_url: `https://${req.get("host")}/?message="success"`,
+    cancel_url: `https://${req.get("host")}/?message="error"`,
   });
   res.send({ session });
 });
-
-router.post("/add", (req, res) => {});
 
 module.exports = router;
