@@ -80,7 +80,8 @@ app.ws("/ws/messages?:chat_room", async (ws, req) => {
         filter: `chat_room=eq.${chat_room}`,
       },
       (p) => {
-        ws.send("dfdsfds");
+        console.log(p);
+        ws.send(JSON.stringify("dfdsfds"));
       }
     )
     .subscribe();
