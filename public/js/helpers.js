@@ -45,25 +45,6 @@ export async function postCheckout() {
   location.replace(session.session.url);
 }
 
-export async function postSingleCheckout(id) {
-  const session = await fetch(
-    `${httpProtocol()}//${baseUrl()}/api/checkout/${id}`,
-    {
-      method: "POST",
-      mode: "cors",
-      headers: { "Content-Type": "application/json" },
-    }
-  )
-    .then((res) => {
-      return res.json();
-    })
-    .catch((err) => {
-      throw new Error(err);
-    });
-
-  location.replace(session.session.url);
-}
-
 export async function getSimilar(id, category) {
   const data = await fetch(
     `${httpProtocol()}//${baseUrl()}/api/products/similar?id=${id}&category=${category}`
