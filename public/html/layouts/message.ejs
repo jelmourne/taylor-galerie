@@ -32,7 +32,7 @@
       ws.addEventListener("message", (e) => {
         const msg = JSON.parse(e.data);
 
-        if (msg.length > 0) {
+        if (Array.isArray(msg)) {
           msg.forEach((e) => {
             messageWindow.innerHTML += `<div class=${
               e.is_client ? "sender" : "recieved"
