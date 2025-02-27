@@ -9,5 +9,8 @@
     "1": {
       "desc": "test"
     }
+  },
+  "error": {
+    "message": "Vous n'avez pas trouvé la page que vous recherchez retour"
   }
 }
