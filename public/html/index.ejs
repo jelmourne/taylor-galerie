@@ -7,24 +7,20 @@
       href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
       rel="stylesheet"
     />
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/dist/umd/supabase.min.js"></script>
     <link rel="stylesheet" href="/css/main.css" />
     <link rel="stylesheet" href="/css/products.css" />
     <title>Taylor Galerie</title>
   </head>
   <body>
     <%- include('layouts/navbar', {categories:categories}); -%>
-    <header class="section__container header__container" id="home">
+    <header class="header__container container" id="home">
       <div class="header__image">
         <img src="header.AVIF" alt="header" />
       </div>
       <div class="header__content">
         <div>
-          <h1>We Help You Make Modern Interior</h1>
-          <p>
-            We will help you to make an elegant and luxurious interior designed
-            by professional interior designer.
-          </p>
+          <h1><%= __("index")["header"]%></h1>
+          <p><%= __("index")["subheader"]%></p>
         </div>
       </div>
     </header>

@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta family="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taylor Galerie | <%= product.family %></title>
 
     <link rel="stylesheet" href="/css/products.css" />
@@ -14,49 +14,47 @@
   </head>
   <body>
     <%- include('layouts/navbar', {categories:categories}); -%>
-    <div id="temporaryContent">
-      <div class="detail">
-        <div>
-          <div class="image">
-            <img
-              src="<%= product.image[0]%>"
-              alt="<%=product.alt_text%>"
-              id="mainImage"
-            />
-          </div>
-          <div class="imageCarousel">
-            <% product.image.map((i,j) => { %>
-            <img src="<%= i %>" />
-            <% }) %>
-          </div>
+    <div class="detail">
+      <div>
+        <div class="image">
+          <img
+            src="<%= product.image[0]%>"
+            alt="<%=product.alt_text%>"
+            id="mainImage"
+          />
         </div>
-        <div class="content">
-          <div class="name"><%=product.family %></div>
-          <div class="sku"><%=product.sku%></div>
-          <div class="price"><%=product.price%></div>
-          <div class="buttons">
-            <button id="productCheckout">Checkout</button>
-            <button
-              class="addCart"
-              data-id="<%= product.id %>,<%= product.family %>,<%= product.price %>,<%= product.image[0] %>"
-            >
-              Add to Cart
-            </button>
-          </div>
-          <div class="description"><%=product.description%></div>
-          <div class="info">
-            <p><%=product.info%></p>
-            <p><%=product.dimentions%></p>
-            <p><%=product.box%></p>
-          </div>
+        <div class="imageCarousel">
+          <% product.image.map((i,j) => { %>
+          <img src="<%= i %>" />
+          <% }) %>
         </div>
-        <div class="title">Similar Products</div>
       </div>
-      <div
-        class="similarProduct"
-        data-prod="<%= product.id %>, <%= product.subcategory %>"
-      ></div>
+      <div class="content">
+        <div class="name"><%=product.family %></div>
+        <div class="sku"><%=product.sku%></div>
+        <div class="price"><%=product.price%></div>
+        <div class="buttons">
+          <button id="productCheckout">Checkout</button>
+          <button
+            class="addCart"
+            data-id="<%= product.id %>,<%= product.family %>,<%= product.price %>,<%= product.image[0] %>"
+          >
+            Add to Cart
+          </button>
+        </div>
+        <div class="description"><%=product.description%></div>
+        <div class="info">
+          <p><%=product.info%></p>
+          <p><%=product.dimentions%></p>
+          <p><%=product.box%></p>
+        </div>
+      </div>
+      <div class="title">Similar Products</div>
     </div>
+    <div
+      class="similarProduct"
+      data-prod="<%= product.id %>, <%= product.subcategory %>"
+    ></div>
     <%- include('layouts/message'); %> <%- include('layouts/footer'); -%>
   </body>
   <script type="module">

@@ -28,7 +28,6 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 0;
 }
 
 .icon-cart {
@@ -118,10 +117,12 @@ body.activeTabCart .cartTab {
   aspect-ratio: 1/1;
   object-fit: cover;
 }
+
 .listProduct {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
+  min-height: 40vh;
 }
 
 .item div {
@@ -162,6 +163,7 @@ body.activeTabCart .cartTab {
   gap: 10px;
   align-items: center;
   text-align: center;
+  width: 100px;
 }
 
 .listCart .item .quantity {
@@ -278,7 +280,9 @@ body.activeTabCart .cartTab {
 .imageCarousel {
   margin-top: 10px;
   display: flex;
-  gap: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .imageCarousel img {
@@ -482,7 +486,7 @@ input[type="email"]:hover {
     transform: translateX(-10px);
   }
   .listProduct {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

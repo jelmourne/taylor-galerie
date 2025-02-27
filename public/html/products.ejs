@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta family="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taylor Galerie | Products</title>
     <link rel="stylesheet" href="/css/products.css" />
     <link rel="stylesheet" href="/css/main.css" />
@@ -26,15 +26,15 @@
             />
           </a>
           <div>
-            <p>
-              <%= `${e.family.toLowerCase()} ${e.subcategory.toLowerCase()}` %>
-            </p>
+            <% var name = `${e.family.toLowerCase()}
+            ${e.subcategory.toLowerCase()}`%>
+            <p><%= name %></p>
             <div class="price"><%= e.price %></div>
             <button
               class="addCart"
               data-id="<%= e.id %>,<%= e.family %>,<%= e.price %>,<%= e.image[0] %>"
             >
-              Add To Cart
+              <i class="ri-shopping-cart-line" style="font-size: medium"></i>
             </button>
           </div>
         </div>

@@ -3,12 +3,15 @@ const path = require("path");
 const cors = require("cors");
 var expressWs = require("express-ws");
 
+const i18n = require("./server/config/i18n.cjs");
+
 const { client } = require("./server/config/config.cjs");
 const { getCategories, verifyRequest } = require("./server/helpers.cjs");
 
 const productApi = require("./server/api/product.cjs");
 const checkoutApi = require("./server/api/checkout.cjs");
 const emailApi = require("./server/api/email.cjs");
+var cookieParser = require("cookie-parser");
 
 // app initialization
 const app = express();
@@ -17,7 +20,8 @@ expressWs(app);
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser(process.env.SUPABASE_SK));
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "/public/html"));
@@ -30,6 +34,9 @@ app.use("/api/email", emailApi);
 
 // restrict users from accessing api routes
 app.use("/api/*", verifyRequest);
+
+// translation service
+app.use(i18n);
 
 // message websocket
 app.ws("/ws/messages?:chat_room", async (ws, req) => {
@@ -135,6 +142,16 @@ app.get("/product/:id", async (req, res) => {
 app.get("/contact", async (req, res) => {
   const categories = await getCategories();
   res.render("contact", { categories: categories });
+});
+
+app.get("/set-language", (req, res) => {
+  const lang = req.query.lang;
+  if (lang && ["fr", "en"].includes(lang)) {
+    res.cookie("locale", lang, {
+      httpOnly: true,
+    });
+  }
+  res.redirect(req.get("Referer") || "/");
 });
 
 app.get("/*", async (req, res) => {
